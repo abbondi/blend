@@ -57,7 +57,8 @@ var app = {
                     "cancelled: " + args.cancelled + "\n");
                 
                 if (args.format == "QR_CODE") {
-                    window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
+                    window.location.href = args.text;
+                    //window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
                 }
                 
                 //document.getElementById("info").innerHTML = args.text;
