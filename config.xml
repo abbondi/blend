@@ -17,6 +17,8 @@
 
     <gap:plugin name="ChildBrowser"/>
     <gap:plugin name="BarcodeScanner"/>
+   
+    <access origin="*" />
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
