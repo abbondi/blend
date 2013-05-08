@@ -60,7 +60,7 @@ var app = {
                     window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
                 }
                 */
-				window.location.href = args.text + '&admin=1';
+				window.location.href = "http://www.zinilombardia2013.it/apps/blend/" + args.text + '&admin=1';
                 //document.getElementById("info").innerHTML = args.text;
                 console.log(args);
         });
