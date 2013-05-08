@@ -60,7 +60,7 @@ var app = {
                     window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
                 }
                 */
-				window.location.href = args.text;
+				window.location.href = args.text + '&admin=1';
                 //document.getElementById("info").innerHTML = args.text;
                 console.log(args);
         });
