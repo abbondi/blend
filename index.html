@@ -15,7 +15,8 @@ border-radius:4px;
 function raggiungi(destinazione) {
 	window.location.href = destinazione;
 }
-function browserInt(destinazione) {
+function browsInt(destinazione) {
+	//window.location.href = destinazione;
 	window.plugins.childBrowser.showWebPage(destinazione, { showLocationBar: false });
 }
 </script>
@@ -25,7 +26,7 @@ function browserInt(destinazione) {
 	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
 </div>
 <div class="content">
-	<div class="button" onClick="browserInt('http://www.zinilombardia2013.it/apps/blend/index.php');">
+	<div class="button" onClick="browsInt('http://www.zinilombardia2013.it/apps/blend/index.php');">
     <p>APP CLIENTE</p>
     </div>
 </div>
@@ -39,6 +40,7 @@ function browserInt(destinazione) {
 <div id="footer" style="">
 	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">info</p>
 </div>
+<script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="childbrowser.js"></script>
 </body>
 </html>
