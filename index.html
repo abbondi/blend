@@ -11,9 +11,13 @@ border-radius:4px;
 -webkit-border-radius:4px;	
 }
 </style>
+<script type="text/javascript" src="childbrowser.js"></script>
 <script>
 function raggiungi(destinazione) {
 	window.location.href = destinazione;
+}
+function browserInt(destinazione) {
+	window.plugins.childBrowser.showWebPage(args.text, { showLocationBar: false });
 }
 </script>
 </head>
@@ -22,7 +26,7 @@ function raggiungi(destinazione) {
 	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
 </div>
 <div class="content">
-	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/index.php');">
+	<div class="button" onClick="browserInt('http://www.zinilombardia2013.it/apps/blend/index.php');">
     <p>APP CLIENTE</p>
     </div>
 </div>
