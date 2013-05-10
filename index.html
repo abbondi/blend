@@ -1,46 +1,61 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>BLEND</title>
-<link href='http://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-.button {
-border-radius:4px;
--webkit-border-radius:4px;	
-}
-</style>
-<script>
-function raggiungi(destinazione) {
-	window.location.href = destinazione;
-}
-function browsInt(destinazione) {
-	//window.location.href = destinazione;
-	window.plugins.childBrowser.showWebPage(destinazione, { showLocationBar: false });
-}
-</script>
-</head>
-<body>
-<div id="header">
-	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
-</div>
-<div class="content">
-	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/index.php');">
-    <p>APP CLIENTE</p>
-    </div>
-</div>
-<div class="content">
-	<div class="button" onClick="raggiungi('scanner.html');">
-    <p>APP GESTORE</p>
-    </div>
-</div>
-
-
-<div id="footer" style="">
-	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">info</p>
-</div>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="childbrowser.js"></script>
-</body>
+    <head>
+        <title>HTML5 Persistent Object</title>
+        
+        <script type="text/javascript" charset="utf-8">
+        
+            //---------------------------------------
+            // Object definition and accessor
+            //---------------------------------------
+            function myObject(var1, var2, var3) {
+                this.one = var1;
+                this.two = var2;
+                this.three = var3;
+                this.toString = toString;
+            }
+            function toString() {
+                return "one=" + this.one +
+                       " two=" + this.two + 
+                       " three=" + this.three;
+            }
+            
+            //---------------------------------------
+            // Button handlers.            
+            //---------------------------------------
+            function setIt() {
+                var testObject = new myObject( "bird", "cat", "dog" );
+                localStorage.setItem("object_key", JSON.stringify(testObject));
+                document.getElementById("objectResponseText").innerHTML = 
+                    "Set object value: " + testObject.toString();
+            }
+            function nullIt() {
+                localStorage.setItem("object_key", null);
+                document.getElementById("objectResponseText").innerHTML = 
+                    "Set object value to null.";             
+            }
+            function getIt() {
+                var stringifiedObject = localStorage.getItem("object_key");
+                var reconstitutedObject = JSON.parse(stringifiedObject);
+                if (reconstitutedObject) {
+                    reconstitutedObject.toString = toString;
+                    document.getElementById("objectResponseText").innerHTML = 
+                        "Got object value: " + reconstitutedObject.toString(); 
+                }
+                else {
+                    document.getElementById("objectResponseText").innerHTML = 
+                        "Object value not found.";
+                }
+            }
+        </script>
+    </head>
+    <body bgcolor="lightblue">
+        <h1>HTML5 Persistent Object</h1>
+        <h3>Object</h3>
+        <input type="button" value="set" onclick="setIt()" />
+        <input type="button" value="get" onclick="getIt()" />
+        <input type="button" value="null" onclick="nullIt()" />
+        <p>
+        <p id="objectResponseText"> </p>        
+    </body>
 </html>
