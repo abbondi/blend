@@ -1,61 +1,164 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>HTML5 Persistent Object</title>
-        
-        <script type="text/javascript" charset="utf-8">
-        
-            //---------------------------------------
-            // Object definition and accessor
-            //---------------------------------------
-            function myObject(var1, var2, var3) {
-                this.one = var1;
-                this.two = var2;
-                this.three = var3;
-                this.toString = toString;
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>BLEND</title>
+<link href='http://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.button {
+border-radius:4px;
+-webkit-border-radius:4px;	
+}
+</style>
+	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+	<script>
+			
+			/* VARIABILI */					
+			var  autoid 			= "0";
+			var  email  			= "";
+			var  name  				= "";
+			var  birthday  			= "";
+			var  tessera  			= "";
+			var  amministratore  	= "";
+			var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/sessione.php?callback=?";
+			var	 appName 			= "blend";						
+			
+			
+			/* FUNZIONI JS */
+			function raggiungi(destinazione) {
+				window.location.href = destinazione;
+			}
+		
+			
+			// oggetto per memorizzare localmente i dati di sessione;
+			function sessioneObj(var1, var2, var3, var4, var5, var6) {
+				
+				this.autoid 		= var1;
+				this.email 			= var2;
+				this.name 			= var3;
+				this.birthday 		= var4;
+				this.tessera 		= var5;
+				this.amministratore = var6;
+	            this.toString = toString;
             }
+			
+			
             function toString() {
-                return "one=" + this.one +
-                       " two=" + this.two + 
-                       " three=" + this.three;
+                return "autoid=" + this.autoid +
+                       " email=" + this.email + 
+					   " name=" + this.name +
+					   " birthday=" + this.birthday + 
+                       " tessera=" + this.tessera + 
+                       " amministratore=" + this.amministratore;
             }
             
-            //---------------------------------------
-            // Button handlers.            
-            //---------------------------------------
-            function setIt() {
-                var testObject = new myObject( "bird", "cat", "dog" );
-                localStorage.setItem("object_key", JSON.stringify(testObject));
-                document.getElementById("objectResponseText").innerHTML = 
-                    "Set object value: " + testObject.toString();
+            function setIt(s1, s2, s3, s4, s5, s6) {
+                var profiloObj = new sessioneObj(s1, s2, s3, s4, s5, s6);
+                localStorage.setItem("profilo_key", JSON.stringify(profiloObj));
+				
+				
+				
+                $('#monitorTxt').append("<br>Dati in remoto trovati e registarti in locale.");
             }
             function nullIt() {
-                localStorage.setItem("object_key", null);
-                document.getElementById("objectResponseText").innerHTML = 
-                    "Set object value to null.";             
+                localStorage.setItem("profilo_key", null);
+				
+				
+                 $('#monitorTxt').html("Dati cancellati.");             
             }
             function getIt() {
-                var stringifiedObject = localStorage.getItem("object_key");
+                var stringifiedObject = localStorage.getItem("profilo_key");
                 var reconstitutedObject = JSON.parse(stringifiedObject);
                 if (reconstitutedObject) {
+					
+					//alert(reconstitutedObject.email);
+					
                     reconstitutedObject.toString = toString;
-                    document.getElementById("objectResponseText").innerHTML = 
-                        "Got object value: " + reconstitutedObject.toString(); 
+                    $('#monitorTxt').html("Dati gi&agrave; in memoria locale."); 
+					$('#monitorTxt').append('<br><br>Ciao ' + reconstitutedObject.name);
                 }
                 else {
-                    document.getElementById("objectResponseText").innerHTML = 
-                        "Object value not found.";
+                    $('#monitorTxt').html("Nessun dato presente in locale, controllo in remoto.");
+					controllaLogin();
                 }
             }
-        </script>
-    </head>
-    <body bgcolor="lightblue">
-        <h1>HTML5 Persistent Object</h1>
-        <h3>Object</h3>
-        <input type="button" value="set" onclick="setIt()" />
-        <input type="button" value="get" onclick="getIt()" />
-        <input type="button" value="null" onclick="nullIt()" />
-        <p>
-        <p id="objectResponseText"> </p>        
-    </body>
+			
+			function controllaLogin() {
+				
+				$.getJSON(appPath,'app='+appName,function(res){
+					
+					autoid 			= res.autoid;
+					email  			= res.email;
+					name  				= res.name;
+					birthday  			= res.birthday;
+					tessera  			= res.tessera;
+					amministratore  	= res.amministratore;
+					
+					if (autoid=="0") {
+						// non ho una sessione valida, devo eseguire il login remoto;
+						
+						$('#monitorTxt').append('<br>Non hai eseguito l\'accesso: fai il login.');	
+											
+					} else  {
+						// sono autenticato in remoto, posso memorizzare il locale i miei dati;
+						setIt(autoid, email, name, birthday, tessera, amministratore);
+						
+						$('#monitorTxt').append('<br><br>Ciao ' + name);	
+						
+					}
+					
+					
+				 
+				 
+				});
+				
+			}
+	
+			document.addEventListener("deviceready", onDeviceReady, false);
+			// once the device ready event fires, you can safely do your thing! -jm
+			function onDeviceReady() {
+				
+				getIt();
+			}
+			
+			/*
+			$(document).ready(function () {
+				
+				//controllo se esistono i dati in locale, altrimenti li prelevo dalla sessione remota (se non ci sono nemmeno lì re-indirizzo verso la pagina di login);
+				getIt();
+			});
+			*/
+    	</script>
+</head>
+<body>
+<div id="header">
+	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
+</div>
+<div class="content">
+	<p id="monitorTxt">DATI DEL CLIENTE:<br></p>
+	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/index.php');">
+    <p>LOGIN</p>
+    </div>
+</div>
+<div class="content">
+	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/applicazione.php');">
+    <p>APPLICAZIONE</p>
+    </div>
+</div>
+<div class="content">
+	<div class="button" onClick="raggiungi('scanner.html');">
+    <p>APP GESTORE</p>
+    </div>
+</div>
+<div class="content">
+	<div class="button" onClick="nullIt();">
+    <p>LOGOUT</p>
+    </div>
+</div>
+<div id="footer" style="">
+	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">info</p>
+</div>
+<script type="text/javascript" src="cordova.js"></script>
+</body>
 </html>
