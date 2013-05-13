@@ -17,7 +17,8 @@ padding:6px;
 	top:0;
 	left:0;
 	width:100%;
-	height:40px;	
+	height:auto;
+	border:none;	
 }
 
 .button {
@@ -25,12 +26,14 @@ padding:6px;
 	top:0;
 	left:0;
 	width:96%;
-	height:36px;
+	height:16px;
 	border:1px solid#999;
 	margin:5px auto;
+	padding: 8px 0;
 	text-align:center;	
 	font-family: 'Ropa Sans', sans-serif;
-	font-size:12px;	
+	font-size:16px;	
+	line-height:16px;
 	color:#3399cc;
 	cursor:pointer;
 	
@@ -39,6 +42,9 @@ border-radius:4px;
 	
 }
 
+.btnQR {
+	height:250px; padding:16px 0;	
+}
 </style>
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 	<script>
@@ -50,15 +56,30 @@ border-radius:4px;
 			var  birthday  			= "";
 			var  tessera  			= "";
 			var  amministratore  	= "";
-			var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/sessione.php?callback=?";
+			var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/"; //sessione.php?callback=?";
 			var	 appName 			= "blend";						
-			
+			var  contatore			= 0;
 			
 			/* FUNZIONI JS */
 			function raggiungi(destinazione) {
 				window.location.href = destinazione;
 			}
-		
+			
+			function mostraVIPCard() {
+				window.location.href = appPath + 'vipcard.php?ID=' + autoid + '-' + tessera;
+			}
+			
+			function dettaglioCliente() {
+				$('#clienteBtn').html(email + ', ' + amministratore);
+				alert(
+				'autoid = ' + autoid + 
+				'\nemail =' + email + 
+				'\nname =' + name + 
+				'\nbirthday =' + birthday + 
+				'\ntessera =' + tessera + '\namministratore =' + amministratore
+				);
+					
+			}
 			
 			// oggetto per memorizzare localmente i dati di sessione;
 			function sessioneObj(var1, var2, var3, var4, var5, var6) {
@@ -88,34 +109,14 @@ border-radius:4px;
 				
 				
 				
-                $('#monitorTxt').append("<br>Dati in remoto trovati e registarti in locale.");
+                //$('#monitorTxt').append("<br>Dati in remoto trovati e registarti in locale.");
             }
-            function nullIt() {
-                localStorage.setItem("profilo_key", null);
-				
-				
-                 $('#monitorTxt').html("Dati cancellati.");             
-            }
-            function getIt() {
-                var stringifiedObject = localStorage.getItem("profilo_key");
-                var reconstitutedObject = JSON.parse(stringifiedObject);
-                if (reconstitutedObject) {
-					
-					//alert(reconstitutedObject.email);
-					
-                    reconstitutedObject.toString = toString;
-                    $('#monitorTxt').html("Dati gi&agrave; in memoria locale."); 
-					$('#monitorTxt').append('<br><br>Ciao ' + reconstitutedObject.name);
-                }
-                else {
-                    $('#monitorTxt').html("Nessun dato presente in locale, controllo in remoto.");
-					controllaLogin();
-                }
-            }
+			
+			
 			
 			function controllaLogin() {
 				
-				$.getJSON(appPath,'app='+appName,function(res){
+				$.getJSON(appPath + 'sessione.php?callback=?','app=' + appName,function(res){
 					
 					autoid 			= res.autoid;
 					email  			= res.email;
@@ -126,14 +127,27 @@ border-radius:4px;
 					
 					if (autoid=="0") {
 						// non ho una sessione valida, devo eseguire il login remoto;
-						
-						$('#monitorTxt').append('<br>Non hai eseguito l\'accesso: fai il login.');	
+						$('#clienteBtn').css('display','none');
+						$('#vipBtn').css('display','none');
+						$('#loginBtn').css('display','block');
+						//$('#monitorTxt').append('<br>Non hai eseguito l\'accesso: fai il login.');	
 											
 					} else  {
 						// sono autenticato in remoto, posso memorizzare il locale i miei dati;
 						setIt(autoid, email, name, birthday, tessera, amministratore);
+						$('#clienteBtn').html(name);
+						$('#vipBtn').html('<img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chof=png&chl=vipcard.php%3FID%3D' + autoid + '-' + tessera + '&choe=UTF-8">');
+						$('#loginBtn').css('display','none');
+						$('#clienteBtn').css('display','block');
+						$('#vipBtn').css('display','block');
 						
-						$('#monitorTxt').append('<br><br>Ciao ' + name);	
+						if (amministratore=="1") {
+							$('#scannerBtn').css('display','block');
+						} else {
+							$('#scannerBtn').css('display','none');
+						}
+						
+						//$('#monitorTxt').append('<br><br>Ciao ' + name);	
 						
 					}
 					
@@ -143,53 +157,138 @@ border-radius:4px;
 				});
 				
 			}
-	
+			
+			
+            function nullIt() {
+                
+				
+				localStorage.setItem("profilo_key", null);
+				autoid 			= "0";
+				email  			= "";
+				name  			= "";
+				birthday  		= "";
+				tessera  		= "";
+				amministratore  = "";
+				 //$('#monitorTxt').html("Dati cancellati in locale.");
+				
+				$.getJSON(appPath + 'logout.php?callback=?','app=' + appName,function(res){
+					//$('#monitorTxt').append("Dati cancellati in remoto.");
+				});
+				
+				$('#clienteBtn').css('display','none');
+				$('#vipBtn').css('display','none');
+				$('#loginBtn').css('display','block');
+				$('#scannerBtn').css('display','none');
+                 
+				             
+            }
+            function getIt() {
+                var stringifiedObject = localStorage.getItem("profilo_key");
+                var reconstitutedObject = JSON.parse(stringifiedObject);
+                if (reconstitutedObject) {
+					
+					//alert(reconstitutedObject.email);
+					autoid 			= reconstitutedObject.autoid;
+					email  			= reconstitutedObject.email;
+					name  				= reconstitutedObject.name;
+					birthday  			= reconstitutedObject.birthday;
+					tessera  			= reconstitutedObject.tessera;
+					amministratore  	= reconstitutedObject.amministratore;
+					
+                    reconstitutedObject.toString = toString;
+                    //$('#monitorTxt').html("Dati gi&agrave; in memoria locale."); 
+					$('#clienteBtn').html(reconstitutedObject.name);
+					$('#vipBtn').html('<img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chof=png&chl=vipcard.php%3FID%3D' + reconstitutedObject.autoid + '-' + reconstitutedObject.tessera + '&choe=UTF-8">');
+					$('#loginBtn').css('display','none');
+					$('#clienteBtn').css('display','block');
+					$('#vipBtn').css('display','block');
+					
+					if (amministratore=="1") {
+						$('#scannerBtn').css('display','block');
+					} else {
+						$('#scannerBtn').css('display','none');
+					}
+					
+                }
+                else {
+                    //$('#monitorTxt').html("Nessun dato presente in locale, controllo in remoto.");
+					$('#clienteBtn').css('display','none');
+					$('#vipBtn').css('display','none');
+					$('#loginBtn').css('display','none');
+					controllaLogin();
+                }
+            }
+			
+			
+			function ciclo() {
+				contatore++;
+				$('#footer p').html(contatore);
+				if(autoid=="0") {
+					getIt();
+				} else {
+					window.clearInterval(intervallo);					
+				}				
+			}
+			
+			
+			function loginBtn() {
+				intervallo = window.setInterval("ciclo()", 1000);
+				raggiungi(appPath + 'loginFB.php');
+			}
+			/*
 			document.addEventListener("deviceready", onDeviceReady, false);
 			// once the device ready event fires, you can safely do your thing! -jm
 			function onDeviceReady() {
 				
 				getIt();
 			}
+			*/
 			
-			/*
 			$(document).ready(function () {
 				
 				//controllo se esistono i dati in locale, altrimenti li prelevo dalla sessione remota (se non ci sono nemmeno lì re-indirizzo verso la pagina di login);
 				getIt();
+				
+				//intervallo = window.setInterval("ciclo()", 1000);
 			});
-			*/
+			
     	</script>
 </head>
 <body>
 <div id="header">
-	<p id="monitorTxt">DATI DEL CLIENTE:<br></p>
 	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
 </div>
+
 <div class="content">
-	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/index.php');">
-    <p>LOGIN</p>
+    <div id="loginBtn" class="button" onClick="loginBtn();" style="display:none;">
+        LOGIN
+    </div>
+    <div id="clienteBtn" class="button" onClick="dettaglioCliente();" style="display:none;">
+        ***
     </div>
 </div>
+
 <div class="content">
-	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/applicazione.php');">
-    <p>APPLICAZIONE</p>
+	<div id="vipBtn" class="button btnQR" onClick="mostraVIPCard();" style="display:none;">
+		***
     </div>
 </div>
+
 <div class="content">
-	<div class="button" onClick="raggiungi('scanner.html');">
-    <p>APP GESTORE</p>
+	<div id ="scannerBtn" class="button" onClick="raggiungi('scanner.html');" style="display:none;">
+    	LETTORE QR
     </div>
 </div>
-<div class="content">
-	<div class="button" onClick="getIt();">
-    <p>CONTROLLA LOGIN</p>
-    </div>
-</div>
+
+
 <div class="content">
 	<div class="button" onClick="nullIt();">
-    <p>LOGOUT</p>
+    	LOGOUT
     </div>
 </div>
+
+
+
 <div id="footer" style="">
 	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">info</p>
 </div>
