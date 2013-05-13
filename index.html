@@ -6,10 +6,39 @@
 <link href='http://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-.button {
-border-radius:4px;
--webkit-border-radius:4px;	
+#monitorTxt { 
+position: absolute;
+color:#fff;
+padding:6px;
+
 }
+.content {
+	position:relative;
+	top:0;
+	left:0;
+	width:100%;
+	height:40px;	
+}
+
+.button {
+	position:relative;
+	top:0;
+	left:0;
+	width:96%;
+	height:36px;
+	border:1px solid#999;
+	margin:5px auto;
+	text-align:center;	
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:12px;	
+	color:#3399cc;
+	cursor:pointer;
+	
+border-radius:4px;
+-webkit-border-radius:4px;		
+	
+}
+
 </style>
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 	<script>
@@ -133,10 +162,10 @@ border-radius:4px;
 </head>
 <body>
 <div id="header">
+	<p id="monitorTxt">DATI DEL CLIENTE:<br></p>
 	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
 </div>
 <div class="content">
-	<p id="monitorTxt">DATI DEL CLIENTE:<br></p>
 	<div class="button" onClick="raggiungi('http://www.zinilombardia2013.it/apps/blend/index.php');">
     <p>LOGIN</p>
     </div>
@@ -149,6 +178,11 @@ border-radius:4px;
 <div class="content">
 	<div class="button" onClick="raggiungi('scanner.html');">
     <p>APP GESTORE</p>
+    </div>
+</div>
+<div class="content">
+	<div class="button" onClick="getIt();">
+    <p>CONTROLLA LOGIN</p>
     </div>
 </div>
 <div class="content">
