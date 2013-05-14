@@ -46,7 +46,7 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 		document.getElementById('scan').setAttribute('style', 'display:block;');
-		app.scan();		
+		//app.scan();		
         console.log('Received Event: ' + id);
     },
 	
