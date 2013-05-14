@@ -28,6 +28,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.getElementById('scan').addEventListener('click', this.scan, false);
+		
     },
     // deviceready Event Handler
     //
@@ -44,11 +45,11 @@ var app = {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-		
-		this.scan;
-		
+		document.getElementById('scan').setAttribute('style', 'display:block;');
+		app.scan();		
         console.log('Received Event: ' + id);
     },
+	
     scan: function() {
 		//alert ("apro fotocamera per la scansione.");
         console.log('scanning');
@@ -66,10 +67,13 @@ var app = {
 				window.location.href = "http://www.zinilombardia2013.it/apps/blend/" + args.text + '&admin=1';
                 //document.getElementById("info").innerHTML = args.text;
                 console.log(args);
-        });
+        	});
         } catch (ex) {
+			alert(ex.message);
             console.log(ex.message);
         }
     }
+
+
 
 };
