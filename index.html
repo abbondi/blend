@@ -303,8 +303,10 @@ border-radius:4px;
 				contatore++;
 				$('#footer p').html(contatore);
 				if(autoid=="0") {
+					$('#attesa').css('display','block');
 					getIt();
 				} else {
+					$('#attesa').css('display','none');
 					window.clearInterval(intervallo);					
 				}				
 			}
@@ -367,6 +369,12 @@ border-radius:4px;
 <div class="content">
 	<div id ="scannerBtn" class="button" onClick="raggiungi('scanner.html');" style="display:none;">
     	LETTORE QR
+    </div>
+</div>
+
+<div class="content">
+	<div id ="attesa" class="button" style="border:none;display:none;">
+    	ATTENDERE...
     </div>
 </div>
 
