@@ -12,6 +12,19 @@ color:#fff;
 padding:6px;
 
 }
+
+#header {
+	height:50px;	
+}
+
+.logo {
+	width:50px;
+	height:40px;
+	position:relative;
+	padding:5px 5px;
+	margin:auto;
+}
+
 .content {
 	position:relative;
 	top:0;
@@ -45,6 +58,43 @@ border-radius:4px;
 .btnQR {
 	height:250px; padding:16px 0;	
 }
+
+#footer {
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;	
+	height:30px;
+	border-top:2px solid #fff;
+	background:#3399cc;
+	font-size:12px;	
+}
+
+#schedaCliente {
+	position:relative;
+	top:0;
+	left:0;
+	width:96%;
+	height:250px;
+	border:1px solid#999;
+	margin:5px auto;
+	padding: 8px 0;
+	text-align:center;	
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:16px;	
+	line-height:16px;
+	color:#3399cc;
+		
+border-radius:4px;
+-webkit-border-radius:4px;		
+	
+}
+
+.testoCliente {
+	text-align:left;
+	margin:0 0 0 16px;
+}
+
 </style>
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 	<script>
@@ -70,7 +120,32 @@ border-radius:4px;
 			}
 			
 			function dettaglioCliente() {
-				$('#clienteBtn').html(email + ', ' + amministratore);
+				//$('#clienteBtn').html(email + ', ' + amministratore);
+				
+				var datanascita = birthday.split("/"); 
+				
+				$('#schedaCliente p').html(
+				'Email: ' + email + 
+				'<br><br>Data di nascita: ' + datanascita[1] + '/' + datanascita[0] + '/' +datanascita[2]
+				
+				
+				);
+				
+				//$('#schedaCliente').toggle();
+				if( $('#schedaCliente').css('display') == 'none' ) {	
+					$('#vipBtn').slideToggle(500,function() {
+						$('#schedaCliente').slideToggle(500);
+						//$('#schedaCliente').toggle();
+					});	
+				} else {
+					$('#schedaCliente').slideToggle(500,function() {
+						$('#vipBtn').slideToggle(500);
+						//$('#vipBtn').toggle();
+					});
+				}
+				
+				rotazione();
+				/*
 				alert(
 				'autoid = ' + autoid + 
 				'\nemail =' + email + 
@@ -78,6 +153,7 @@ border-radius:4px;
 				'\nbirthday =' + birthday + 
 				'\ntessera =' + tessera + '\namministratore =' + amministratore
 				);
+				*/
 					
 			}
 			
@@ -130,12 +206,13 @@ border-radius:4px;
 						$('#clienteBtn').css('display','none');
 						$('#vipBtn').css('display','none');
 						$('#loginBtn').css('display','block');
+						$('#schedaCliente').css('display','none');
 						//$('#monitorTxt').append('<br>Non hai eseguito l\'accesso: fai il login.');	
 											
 					} else  {
 						// sono autenticato in remoto, posso memorizzare il locale i miei dati;
 						setIt(autoid, email, name, birthday, tessera, amministratore);
-						$('#clienteBtn').html(name);
+						$('#clienteBtn').html($('#clienteBtn').html() + name);
 						$('#vipBtn').html('<img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chof=png&chl=vipcard.php%3FID%3D' + autoid + '-' + tessera + '&choe=UTF-8">');
 						$('#loginBtn').css('display','none');
 						$('#clienteBtn').css('display','block');
@@ -178,6 +255,7 @@ border-radius:4px;
 				$('#clienteBtn').css('display','none');
 				$('#vipBtn').css('display','none');
 				$('#loginBtn').css('display','block');
+				$('#schedaCliente').css('display','none');
 				$('#scannerBtn').css('display','none');
                  
 				             
@@ -197,7 +275,7 @@ border-radius:4px;
 					
                     reconstitutedObject.toString = toString;
                     //$('#monitorTxt').html("Dati gi&agrave; in memoria locale."); 
-					$('#clienteBtn').html(reconstitutedObject.name);
+					$('#clienteBtn').html($('#clienteBtn').html() + reconstitutedObject.name);
 					$('#vipBtn').html('<img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chof=png&chl=vipcard.php%3FID%3D' + reconstitutedObject.autoid + '-' + reconstitutedObject.tessera + '&choe=UTF-8">');
 					$('#loginBtn').css('display','none');
 					$('#clienteBtn').css('display','block');
@@ -215,6 +293,7 @@ border-radius:4px;
 					$('#clienteBtn').css('display','none');
 					$('#vipBtn').css('display','none');
 					$('#loginBtn').css('display','none');
+					$('#schedaCliente').css('display','none');
 					controllaLogin();
                 }
             }
@@ -256,7 +335,7 @@ border-radius:4px;
 </head>
 <body>
 <div id="header">
-	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
+	<div class="logo"><img src="img/logo.png" style="height:40px;width:50px;border:none;"></div>
 </div>
 
 <div class="content">
@@ -264,7 +343,7 @@ border-radius:4px;
         LOGIN
     </div>
     <div id="clienteBtn" class="button" onClick="dettaglioCliente();" style="display:none;">
-        ***
+    	<span id="fr-rotate" style="position:absolute;right:8px;display:block;width:22px;height:16px; background:url(img/fr.png) center center no-repeat;"></span>    
     </div>
 </div>
 
@@ -275,21 +354,46 @@ border-radius:4px;
 </div>
 
 <div class="content">
+	<div id="schedaCliente" style="display:none;">
+		<p class="testoCliente">***</p>
+        <div id ="logoutBtn" class="button" onClick="nullIt();" style="position:absolute;left: 16px;width: 100px;top: 200px;">
+    		LOGOUT
+    	</div>
+    </div>
+</div>
+
+
+
+<div class="content">
 	<div id ="scannerBtn" class="button" onClick="raggiungi('scanner.html');" style="display:none;">
     	LETTORE QR
     </div>
 </div>
 
 
-<div class="content">
-	<div class="button" onClick="nullIt();">
-    	LOGOUT
-    </div>
-</div>
+
+<div class="" style="margin-top: 180px;display:none;" id="degree_holder">Dummy Div serve per la rotazione della freccia!</div>
+
+<script type="text/javascript" src="js/jquery-css-transform.js"></script>
+<script>
+    var start = 0;
+    function rotazione(){
+		if(start == 0){end = 180}else{end = 0}
+		$('#degree_holder').css('margin-top',start);
+		$('#degree_holder').animate({
+			'marginTop' : end
+		},{
+			duration:750,
+			step: function(now, fx) {
+				$('#fr-rotate').css('transform','rotate(' + now + 'deg)');
+			},
+			complete:function(){start = end;}
+		});
+    }
+</script>
 
 
-
-<div id="footer" style="">
+<div id="footer">
 	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">info</p>
 </div>
 <script type="text/javascript" src="cordova.js"></script>

@@ -44,10 +44,13 @@ var app = {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-
+		
+		this.scan;
+		
         console.log('Received Event: ' + id);
     },
     scan: function() {
+		//alert ("apro fotocamera per la scansione.");
         console.log('scanning');
         try {
             window.plugins.barcodeScanner.scan(function(args) {
