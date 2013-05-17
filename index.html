@@ -95,6 +95,45 @@ border-radius:4px;
 	margin:0 0 0 16px;
 }
 
+.fieldset {
+	width:96%;
+	margin:0 auto;
+	padding:0;
+	border:none;
+	
+}
+
+
+.field {
+	display: block;
+	float:right;
+	width:74%;
+	height:16px;
+	border:1px solid#999;
+	margin:5px auto;
+	padding: 8px 8px;
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:16px;	
+	line-height:16px;
+	color:#3399cc;
+	border-radius:4px;
+	-webkit-border-radius:4px;	
+}
+
+.label {
+	display: block;
+	float:left;
+	width:20%;
+	height:16px;
+	margin:5px auto;
+	padding: 8px 0;
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:16px;	
+	line-height:16px;
+	color:#3399cc;
+		
+}
+
 </style>
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 	<script>
@@ -314,7 +353,15 @@ border-radius:4px;
 			
 			function loginBtn() {
 				intervallo = window.setInterval("ciclo()", 1000);
-				raggiungi(appPath + 'loginFB.php');
+					
+  				document.formL.submit();
+				//raggiungi(appPath + 'loginFB.php');
+			}
+			
+			function registratiBtn() {
+									
+  				window.location.href = appPath + 'registrati.php';
+				//raggiungi(appPath + 'loginFB.php');
 			}
 			/*
 			document.addEventListener("deviceready", onDeviceReady, false);
@@ -340,10 +387,28 @@ border-radius:4px;
 	<div class="logo"><img src="img/logo.png" style="height:40px;width:50px;border:none;"></div>
 </div>
 
-<div class="content">
-    <div id="loginBtn" class="button" onClick="loginBtn();" style="display:none;">
-        LOGIN
-    </div>
+<div class="content" id="loginBtn" style="display:none;">
+	<form name="formL" method="post" action="http://www.zinilombardia2013.it/apps/blend/loginINT.php">
+    	<fieldset class="fieldset">
+			<label for="email" class="label">email</label>
+    		<input type="text" value="" name="email" id="emailBox" class="field" />
+            <br>
+            <label for="passsword" class="label">password</label>
+    		<input type="password" value="" name="pwd" id="passowrdBox" class="field" >
+            <div class="field" style="text-align:center;cursor:pointer;" onClick="loginBtn();">
+        		LOGIN
+    		</div>
+            <div class="field" style="text-align:center;border:none;">
+        		oppure
+    		</div>
+            <div class="field" style="text-align:center;cursor:pointer;" onClick="registratiBtn();">
+        		REGISTRATI
+    		</div>
+        </fieldset>
+    </form>
+    
+</div>
+<div class="content">   
     <div id="clienteBtn" class="button" onClick="dettaglioCliente();" style="display:none;">
     	<span id="fr-rotate" style="position:absolute;right:8px;display:block;width:22px;height:16px; background:url(img/fr.png) center center no-repeat;"></span>    
     </div>
