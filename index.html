@@ -106,12 +106,12 @@ border-radius:4px;
 
 .field {
 	display: block;
-	float:right;
-	width:74%;
+	width:96%;
 	height:16px;
 	border:1px solid#999;
-	margin:5px auto;
+	margin:0 auto 8px auto;
 	padding: 8px 8px;
+	text-align: center;
 	font-family: 'Ropa Sans', sans-serif;
 	font-size:16px;	
 	line-height:16px;
@@ -120,25 +120,20 @@ border-radius:4px;
 	-webkit-border-radius:4px;	
 }
 
-.label {
-	display: block;
-	float:left;
-	width:20%;
-	height:16px;
-	margin:5px auto;
-	padding: 8px 0;
+.avviso {
 	font-family: 'Ropa Sans', sans-serif;
 	font-size:16px;	
-	line-height:16px;
-	color:#3399cc;
-		
+	text-align:center;
+	line-height:0pt;
+	color:#3399cc;	
 }
-
 </style>
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 	<script>
 			
-			/* VARIABILI */					
+			/* VARIABILI */	
+			var  etichette 			= new Array('email', 'password');
+			var  valori 			= new Array('', '');				
 			var  autoid 			= "0";
 			var  email  			= "";
 			var  name  				= "";
@@ -244,6 +239,23 @@ border-radius:4px;
 						// non ho una sessione valida, devo eseguire il login remoto;
 						$('#clienteBtn').css('display','none');
 						$('#vipBtn').css('display','none');
+						
+						if (valori[0] != '') {
+							$('#emailBox').val(valori[0]);
+						} else  {
+							$('#emailBox').val(etichette[0]);
+						}
+						
+						if (valori[1] != '') {
+							$('#passwordBox').get(0).type='password';
+							$('#passwordBox').val(valori[1]);
+						} else  {
+							$('#passwordBox').get(0).type='text';
+							$('#passwordBox').val(etichette[1]);
+						}
+						//$('#passwordBox').value('password');
+						
+						
 						$('#loginBtn').css('display','block');
 						$('#schedaCliente').css('display','none');
 						//$('#monitorTxt').append('<br>Non hai eseguito l\'accesso: fai il login.');	
@@ -293,6 +305,17 @@ border-radius:4px;
 				
 				$('#clienteBtn').css('display','none');
 				$('#vipBtn').css('display','none');
+				
+				if (valori[1] != '') {
+					$('#passwordBox').get(0).type='password';
+					$('#passwordBox').val(valori[1]);
+				} else  {
+					$('#passwordBox').get(0).type='text';
+					$('#passwordBox').val(etichette[1]);
+				}
+				
+				
+				
 				$('#loginBtn').css('display','block');
 				$('#schedaCliente').css('display','none');
 				$('#scannerBtn').css('display','none');
@@ -353,6 +376,8 @@ border-radius:4px;
 			
 			function loginBtn() {
 				intervallo = window.setInterval("ciclo()", 1000);
+				valori[0] = $('#emailBox').val();
+				valori[1] = $('#passwordBox').val();
 					
   				document.formL.submit();
 				//raggiungi(appPath + 'loginFB.php');
@@ -363,6 +388,18 @@ border-radius:4px;
   				window.location.href = appPath + 'registrati.php';
 				//raggiungi(appPath + 'loginFB.php');
 			}
+			
+			
+			function cancella(elem,index) {
+				elem.style.color = '#3399cc';
+				if ((elem.type=="text") && (elem.name=="pwd")) {
+					elem.type="password";
+				}
+				elem.value="";
+				document.getElementById('selezionato').innerHTML = etichette[index];
+			}			
+			
+			
 			/*
 			document.addEventListener("deviceready", onDeviceReady, false);
 			// once the device ready event fires, you can safely do your thing! -jm
@@ -390,11 +427,9 @@ border-radius:4px;
 <div class="content" id="loginBtn" style="display:none;">
 	<form name="formL" method="post" action="http://www.zinilombardia2013.it/apps/blend/loginINT.php">
     	<fieldset class="fieldset">
-			<label for="email" class="label">email</label>
-    		<input type="text" value="" name="email" id="emailBox" class="field" />
-            <br>
-            <label for="passsword" class="label">password</label>
-    		<input type="password" value="" name="pwd" id="passowrdBox" class="field" >
+			<p class="avviso" id="selezionato">inserisci i tuoi dati di accesso:</p>
+    		<input type="text" value="" name="email" id="emailBox" class="field" onClick="javascript:cancella(this,0);" onFocus="javascript:cancella(this,0);" />
+    		<input type="password" value="" name="pwd" id="passwordBox" class="field" onClick="javascript:cancella(this,1);" onFocus="javascript:cancella(this,1);" / >
             <div class="field" style="text-align:center;cursor:pointer;" onClick="loginBtn();">
         		LOGIN
     		</div>
