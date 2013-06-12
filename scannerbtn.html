@@ -53,38 +53,41 @@ padding:6px;
 
 
 .content {
-	position:relative;
-	top:0;
+	position:absolute;
+	top:75%;
 	left:0;
 	width:100%;
-	height:auto;
+	height:50px;
 	border:none;	
 }
 
 .button {
 	position:relative;
-	top:0;
+	bottom:80px;
 	left:0;
-	width:96%;
+	width:76%;
 	height:16px;
-	border:none; /*1px solid#999;*/
 	margin:5px auto;
 	padding: 8px 0;
 	text-align:center;	
 	font-family: 'Ropa Sans', sans-serif;
 	font-size:16px;	
 	line-height:16px;
-	color:#3399cc;
+	color:#fff;
+	background:#00c896;
 	cursor:pointer;
 	
-border-radius:4px;
--webkit-border-radius:4px;		
-	
+		
+	border:none;
+	border-radius:4px;
+	-webkit-border-radius:4px;
+	box-shadow:4px 4px 8px black;
+		
 }
 
 .button:hover {
-	background:none;
-	color:#fff;
+	background:#00c896;
+	box-shadow:4px 4px 8px black;
 }
 
 .btnQR {
@@ -142,10 +145,12 @@ border-radius:4px;
 	
 }
 
+
 .field {
 	display: block;
 	width:96%;
 	height:16px;
+	border:1px solid#999;
 	margin:0 auto 8px auto;
 	padding: 8px 8px;
 	text-align: center;
@@ -156,8 +161,7 @@ border-radius:4px;
 	border-radius:4px;
 	-webkit-border-radius:4px;	
 	
-	border:none;
-	box-shadow:4px 4px 8px black;margin-top:20px;
+	border:none;box-shadow:4px 4px 8px black;margin-top:20px;
 }
 
 .avviso {
@@ -300,8 +304,8 @@ border-radius:4px;
 						$('#vipBtn').css('display','block');
 						
 						if (amministratore=="1") {
-							//$('#scannerBtn').css('display','block');
-							window.location.href = 'scannerbtn.html';
+							$('#scannerBtn').css('display','block');
+							//window.location.href = 'scannerbtn.html';
 						} else {
 							$('#scannerBtn').css('display','none');
 						}
@@ -375,8 +379,8 @@ border-radius:4px;
 					$('#vipBtn').css('display','block');
 					
 					if (amministratore=="1") {
-						//$('#scannerBtn').css('display','block');
-						window.location.href = 'scannerbtn.html';
+						$('#scannerBtn').css('display','block');
+						//window.location.href = 'scannerbtn.html';
 					} else {
 						$('#scannerBtn').css('display','none');
 					}
@@ -448,78 +452,15 @@ border-radius:4px;
 <body>
 <div id="sfondo">
 </div>
-<div id="intestazione"></div>
-<div class="content" id="loginBtn" style="width:70%;margin:auto;top:60px;display:none;">
-	<form name="formL" method="post" action="http://www.zinilombardia2013.it/apps/blend/loginINT.php">
-    	<fieldset class="fieldset">
-			<p class="avviso" id="selezionato">&nbsp;</p>
-    		<input type="text" value="" name="email" id="emailBox" class="field" onClick="javascript:cancella(this,0);" onFocus="javascript:cancella(this,0);" />
-    		<input type="password" value="" name="pwd" id="passwordBox" class="field" onClick="javascript:cancella(this,1);" onFocus="javascript:cancella(this,1);" / >
-            <div class="field" style="text-align:center;cursor:pointer;background:#615e5f;color:#fff;border:none;box-shadow:4px 4px 8px black;margin-top:20px;" onClick="loginBtn();">
-        		ACCEDI
-    		</div>
-        </fieldset>
-    </form>
-</div>
-<div class="content" style="top:60px;">   
-    <div id="clienteBtn" class="button" onClick="dettaglioCliente();" style="display:none;">
-    	<!--span id="fr-rotate" style="position:absolute;right:8px;display:block;width:22px;height:16px; background:url(img/fr.png) center center no-repeat;"></span-->    
-    </div>
-</div>
-
-<div class="content" style="top:60px;border:none;">
-	<div id="vipBtn" class="button btnQR" onClick="mostraVIPCard();" style="display:none;">
-		***
-    </div>
-</div>
-
-<div class="content">
-	<div id="schedaCliente" style="display:none;">
-		<p class="testoCliente">***</p>
-        <div id ="logoutBtn" class="button" onClick="nullIt();" style="position:absolute;left: 16px;width: 100px;top: 200px;">
-    		LOGOUT
-    	</div>
-    </div>
-</div>
-
-
-
+<!--div id="intestazione"></div-->
 <div class="content">
 	<div id ="scannerBtn" class="button" onClick="raggiungi('scanner.html');" style="display:none;">
-    	GESTIONE
+    	LEGGI QR
     </div>
 </div>
-
-<div class="content">
-	<div id ="attesa" class="button" style="border:none;display:none;">
-    	ATTENDERE...
-    </div>
-</div>
-
-
-
-<div class="" style="margin-top: 180px;display:none;" id="degree_holder">Dummy Div serve per la rotazione della freccia!</div>
-
-<script type="text/javascript" src="js/jquery-css-transform.js"></script>
-<script>
-    var start = 0;
-    function rotazione(){
-		if(start == 0){end = 180}else{end = 0}
-		$('#degree_holder').css('margin-top',start);
-		$('#degree_holder').animate({
-			'marginTop' : end
-		},{
-			duration:750,
-			step: function(now, fx) {
-				$('#fr-rotate').css('transform','rotate(' + now + 'deg)');
-			},
-			complete:function(){start = end;}
-		});
-    }
-</script>
-<div id="footer" style="cursor:pointer;" onClick="javascript:raggiungi('index.html');">
+<!--div id="footer" style="cursor:pointer;" onClick="javascript:raggiungi('index.html');">
 &laquo; BACK
-</div>
+</div-->
 <script type="text/javascript" src="cordova.js"></script>
 </body>
 </html>

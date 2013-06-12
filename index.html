@@ -17,7 +17,6 @@
 	overflow:hidden;
 }
 
-
 #logo {
 	position:absolute;
 	top:0;
@@ -139,8 +138,10 @@ border-radius:4px;
 						// test se sono amministratore carica la pagina con lo scanner							
 						if (amministratore=="1") {
 							//$('#scannerBtn').css('display','block');
+							window.location.href = 'scannerbtn.html';
 						} else {
 							//$('#scannerBtn').css('display','none');
+							window.location.href = appPath + 'benvenutoINT.php';
 						}
 	
 						
@@ -166,12 +167,15 @@ border-radius:4px;
                     reconstitutedObject.toString = toString;
 
 					$('#loginBtn').css('display','none');
-					// devo vare il redirect verso l'applicazione locale oppre se sono amministratore verso il lettore di barcode	
+					// devo vare il redirect verso l'applicazione locale oppure se sono amministratore verso il lettore di barcode	
 					// test se sono amministratore carica la pagina con lo scanner		
 					if (amministratore=="1") {
 						//$('#scannerBtn').css('display','block');
+						window.location.href = 'scannerbtn.html';
 					} else {
 						//$('#scannerBtn').css('display','none');
+						//window.location.href = appPath + 'benvenutoINT.php';
+						window.location.href = appPath + 'sessionenuova.php?autoid=' + autoid;
 					}
 					
                 }
