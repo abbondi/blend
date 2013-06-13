@@ -8,32 +8,6 @@
 <link href='http://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-#sfondo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/esagoni.png);
-	background-size:100% auto;
-	overflow:hidden;
-}
-
-#intestazione {
-	position:relative;
-	top:0;
-	left:0;
-	width:100%;
-	height:50px;
-	color:#fff;
-	background:#00c896 url(img/blend.png) no-repeat;
-	background-size: auto 100%;
-	background-position:center; 
-	border-bottom-right-radius:10px;
-	border-bottom-left-radius:10px; 	
-	overflow:hidden;
-}
-
 .button {
 border-radius:4px;
 -webkit-border-radius:4px;	
@@ -74,25 +48,6 @@ border-radius:4px;
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
-
-#footer {
-	position:absolute;
-	bottom:0;
-	left:0;
-	width:100%;	
-	height:30px;
-	background:#615e5f;
-	font-size:12px;	
-	text-align:center;
-	color:#fff;
-	font-family: 'Ropa Sans', sans-serif;
-	font-size:16px;	
-	line-height:30px;
-	border-top:0;
-	border-top-right-radius:10px;
-	border-top-left-radius:10px; 
-}
-
 </style>
 <script>
 function raggiungi(destinazione) {
@@ -101,9 +56,9 @@ function raggiungi(destinazione) {
 </script>
 </head>
 <body>
-<div id="sfondo">
+<div id="header">
+	<div class="logo"><img src="img/logo.png" style="height:80px;width:100px;border:none;"></div>
 </div>
-<div id="intestazione"></div>
 <div class="content">
 	<div id="deviceready" class="button blink" style="border:none;">
                 <p class="event listening">Preparazione lettore barcode...</p>
@@ -116,7 +71,7 @@ function raggiungi(destinazione) {
     </div>
 </div>
 <div id="footer" style ="cursor:pointer;"  onClick="javascript:window.history.go(-1);">
-	&laquo; BACK
+	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">&laquo; BACK</p>
 </div>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="barcodescanner.js"></script>
