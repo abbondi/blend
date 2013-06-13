@@ -8,21 +8,19 @@
     <name>BLEND</name>
 
     <description>
-        BLEND Applicazione VIP Card
+        BLEND Prova Scanner
     </description>
 
     <author href="http://www.massimoabbondi.it" email="magenta@massimoabbondi.it">
         Massimo Abbondi
 	</author>
 
-	<access origin="*" />
-	
     <gap:plugin name="ChildBrowser"/>
     <gap:plugin name="BarcodeScanner"/>
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
-    <preference name="phonegap-version" value="2.7.0" />
+    <preference name="phonegap-version" value="2.5.0" />
     <preference name="orientation"      value="default" />
     <preference name="target-device"    value="universal" />
     <preference name="fullscreen"       value="false" />
