@@ -6,25 +6,23 @@
 <link href='http://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-#sfondo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/esagoni.png);
-	background-size:100% auto;
-	overflow:hidden;
+#monitorTxt { 
+position: absolute;
+color:#fff;
+padding:6px;
+
 }
 
-#logo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/logo-r.png) no-repeat;
-	background-size:100% auto;
+#header {
+	height:50px;	
+}
+
+.logo {
+	width:50px;
+	height:40px;
+	position:relative;
+	padding:5px 5px;
+	margin:auto;
 }
 
 .content {
@@ -57,6 +55,55 @@ border-radius:4px;
 	
 }
 
+.btnQR {
+	height:250px; padding:16px 0;	
+}
+
+#footer {
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;	
+	height:30px;
+	border-top:2px solid #fff;
+	background:#3399cc;
+	font-size:12px;	
+}
+
+#schedaCliente {
+	position:relative;
+	top:0;
+	left:0;
+	width:96%;
+	height:250px;
+	border:1px solid#999;
+	margin:5px auto;
+	padding: 8px 0;
+	text-align:center;	
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:16px;	
+	line-height:16px;
+	color:#3399cc;
+		
+border-radius:4px;
+-webkit-border-radius:4px;		
+	
+}
+
+.testoCliente {
+	text-align:left;
+	margin:0 0 0 16px;
+}
+
+.fieldset {
+	width:96%;
+	margin:0 auto;
+	padding:0;
+	border:none;
+	
+}
+
+
 .field {
 	display: block;
 	width:96%;
@@ -73,11 +120,20 @@ border-radius:4px;
 	-webkit-border-radius:4px;	
 }
 
+.avviso {
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:16px;	
+	text-align:center;
+	line-height:0pt;
+	color:#3399cc;	
+}
 </style>
 	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 	<script>
 			
 			/* VARIABILI */	
+			var  etichette 			= new Array('email', 'password');
+			var  valori 			= new Array('', '');				
 			var  autoid 			= "0";
 			var  email  			= "";
 			var  name  				= "";
@@ -86,8 +142,55 @@ border-radius:4px;
 			var  amministratore  	= "";
 			var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/"; //sessione.php?callback=?";
 			var	 appName 			= "blend";						
-				
+			var  contatore			= 0;
+			
 			/* FUNZIONI JS */
+			function raggiungi(destinazione) {
+				window.location.href = destinazione;
+			}
+			
+			function mostraVIPCard() {
+				window.location.href = appPath + 'vipcard.php?ID=' + autoid + '-' + tessera;
+			}
+			
+			function dettaglioCliente() {
+				//$('#clienteBtn').html(email + ', ' + amministratore);
+				
+				var datanascita = birthday.split("/"); 
+				
+				$('#schedaCliente p').html(
+				'Email: ' + email + 
+				'<br><br>Data di nascita: ' + datanascita[1] + '/' + datanascita[0] + '/' +datanascita[2]
+				
+				
+				);
+				
+				//$('#schedaCliente').toggle();
+				if( $('#schedaCliente').css('display') == 'none' ) {	
+					$('#vipBtn').slideToggle(500,function() {
+						$('#schedaCliente').slideToggle(500);
+						//$('#schedaCliente').toggle();
+					});	
+				} else {
+					$('#schedaCliente').slideToggle(500,function() {
+						$('#vipBtn').slideToggle(500);
+						//$('#vipBtn').toggle();
+					});
+				}
+				
+				rotazione();
+				/*
+				alert(
+				'autoid = ' + autoid + 
+				'\nemail =' + email + 
+				'\nname =' + name + 
+				'\nbirthday =' + birthday + 
+				'\ntessera =' + tessera + '\namministratore =' + amministratore
+				);
+				*/
+					
+			}
+			
 			// oggetto per memorizzare localmente i dati di sessione;
 			function sessioneObj(var1, var2, var3, var4, var5, var6) {
 				
@@ -113,7 +216,13 @@ border-radius:4px;
             function setIt(s1, s2, s3, s4, s5, s6) {
                 var profiloObj = new sessioneObj(s1, s2, s3, s4, s5, s6);
                 localStorage.setItem("profilo_key", JSON.stringify(profiloObj));
+				
+				
+				
+                //$('#monitorTxt').append("<br>Dati in remoto trovati e registarti in locale.");
             }
+			
+			
 			
 			function controllaLogin() {
 				
@@ -128,29 +237,91 @@ border-radius:4px;
 					
 					if (autoid=="0") {
 						// non ho una sessione valida, devo eseguire il login remoto;
+						$('#clienteBtn').css('display','none');
+						$('#vipBtn').css('display','none');
+						
+						if (valori[0] != '') {
+							$('#emailBox').val(valori[0]);
+						} else  {
+							$('#emailBox').val(etichette[0]);
+						}
+						
+						if (valori[1] != '') {
+							$('#passwordBox').get(0).type='password';
+							$('#passwordBox').val(valori[1]);
+						} else  {
+							$('#passwordBox').get(0).type='text';
+							$('#passwordBox').val(etichette[1]);
+						}
+						//$('#passwordBox').value('password');
+						
+						
 						$('#loginBtn').css('display','block');
+						$('#schedaCliente').css('display','none');
+						//$('#monitorTxt').append('<br>Non hai eseguito l\'accesso: fai il login.');	
 											
 					} else  {
 						// sono autenticato in remoto, posso memorizzare il locale i miei dati;
 						setIt(autoid, email, name, birthday, tessera, amministratore);
+						$('#clienteBtn').html($('#clienteBtn').html() + name);
+						$('#vipBtn').html('<img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chof=png&chl=vipcard.php%3FID%3D' + autoid + '-' + tessera + '&choe=UTF-8">');
 						$('#loginBtn').css('display','none');
-						// devo vare il redirect verso l'applicazione locale oppre se sono amministratore verso il lettore di barcode						
-						// test se sono amministratore carica la pagina con lo scanner							
+						$('#clienteBtn').css('display','block');
+						$('#vipBtn').css('display','block');
+						
 						if (amministratore=="1") {
-							//$('#scannerBtn').css('display','block');
-							window.location.href = 'scannerbtn.html';
+							$('#scannerBtn').css('display','block');
 						} else {
-							//$('#scannerBtn').css('display','none');
-							window.location.href = appPath + 'benvenutoINT.php';
+							$('#scannerBtn').css('display','none');
 						}
-	
+						
+						//$('#monitorTxt').append('<br><br>Ciao ' + name);	
 						
 					}
+					
+					
+				 
 				 
 				});
 				
 			}
 			
+			
+            function nullIt() {
+                
+				
+				localStorage.setItem("profilo_key", null);
+				autoid 			= "0";
+				email  			= "";
+				name  			= "";
+				birthday  		= "";
+				tessera  		= "";
+				amministratore  = "";
+				 //$('#monitorTxt').html("Dati cancellati in locale.");
+				
+				$.getJSON(appPath + 'logout.php?callback=?','app=' + appName,function(res){
+					//$('#monitorTxt').append("Dati cancellati in remoto.");
+				});
+				
+				$('#clienteBtn').css('display','none');
+				$('#vipBtn').css('display','none');
+				
+				if (valori[1] != '') {
+					$('#passwordBox').get(0).type='password';
+					$('#passwordBox').val(valori[1]);
+				} else  {
+					$('#passwordBox').get(0).type='text';
+					$('#passwordBox').val(etichette[1]);
+				}
+				
+				
+				
+				$('#loginBtn').css('display','block');
+				$('#schedaCliente').css('display','none');
+				$('#scannerBtn').css('display','none');
+                 
+				             
+            }
             function getIt() {
                 var stringifiedObject = localStorage.getItem("profilo_key");
                 var reconstitutedObject = JSON.parse(stringifiedObject);
@@ -165,55 +336,174 @@ border-radius:4px;
 					amministratore  	= reconstitutedObject.amministratore;
 					
                     reconstitutedObject.toString = toString;
-
+                    //$('#monitorTxt').html("Dati gi&agrave; in memoria locale."); 
+					$('#clienteBtn').html($('#clienteBtn').html() + reconstitutedObject.name);
+					$('#vipBtn').html('<img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&chof=png&chl=vipcard.php%3FID%3D' + reconstitutedObject.autoid + '-' + reconstitutedObject.tessera + '&choe=UTF-8">');
 					$('#loginBtn').css('display','none');
-					// devo vare il redirect verso l'applicazione locale oppure se sono amministratore verso il lettore di barcode	
-					// test se sono amministratore carica la pagina con lo scanner		
+					$('#clienteBtn').css('display','block');
+					$('#vipBtn').css('display','block');
+					
 					if (amministratore=="1") {
-						//$('#scannerBtn').css('display','block');
-						window.location.href = 'scannerbtn.html';
+						$('#scannerBtn').css('display','block');
 					} else {
-						//$('#scannerBtn').css('display','none');
-						//window.location.href = appPath + 'benvenutoINT.php';
-						window.location.href = appPath + 'sessionenuova.php?autoid=' + autoid;
+						$('#scannerBtn').css('display','none');
 					}
 					
                 }
                 else {
+                    //$('#monitorTxt').html("Nessun dato presente in locale, controllo in remoto.");
+					$('#clienteBtn').css('display','none');
+					$('#vipBtn').css('display','none');
 					$('#loginBtn').css('display','none');
-						controllaLogin();
+					$('#schedaCliente').css('display','none');
+					controllaLogin();
                 }
             }
-				
+			
+			
+			function ciclo() {
+				contatore++;
+				$('#footer p').html(contatore);
+				if(autoid=="0") {
+					$('#attesa').css('display','block');
+					getIt();
+				} else {
+					$('#attesa').css('display','none');
+					window.clearInterval(intervallo);					
+				}				
+			}
+			
+			
 			function loginBtn() {
-				window.location.href = 'login.html';
+				intervallo = window.setInterval("ciclo()", 1000);
+				valori[0] = $('#emailBox').val();
+				valori[1] = $('#passwordBox').val();
+					
+  				document.formL.submit();
+				//raggiungi(appPath + 'loginFB.php');
 			}
-		
+			
 			function registratiBtn() {
-				window.location.href = appPath + 'registrati.php';
+									
+  				window.location.href = appPath + 'registrati.php';
+				//raggiungi(appPath + 'loginFB.php');
 			}
+			
+			
+			function cancella(elem,index) {
+				elem.style.color = '#3399cc';
+				if ((elem.type=="text") && (elem.name=="pwd")) {
+					elem.type="password";
+				}
+				elem.value="";
+				document.getElementById('selezionato').innerHTML = etichette[index];
+			}			
+			
+			
+			/*
+			document.addEventListener("deviceready", onDeviceReady, false);
+			// once the device ready event fires, you can safely do your thing! -jm
+			function onDeviceReady() {
 				
+				getIt();
+			}
+			*/
+			
 			$(document).ready(function () {
+				
 				//controllo se esistono i dati in locale, altrimenti li prelevo dalla sessione remota (se non ci sono nemmeno lì re-indirizzo verso la pagina di login);
 				getIt();
+				
+				//intervallo = window.setInterval("ciclo()", 1000);
 			});
 			
     	</script>
 </head>
 <body>
-<div id="sfondo"></div>
-<div id="logo"></div>
-<div style="position:absolute;width:100%;bottom:60px;overflow:hidden;">
-    <div class="content" id="loginBtn" style="display:none;width:70%;margin:auto;">
-         <div class="field" style="text-align:center;cursor:pointer;background:#34a423;color:#ffffff;border:none;box-shadow:4px 4px 8px black;" onClick="registratiBtn();">
-            REGISTRAZIONE
-        </div>   
-        <div class="field" style="text-align:center;cursor:pointer;background:#3e589c;color:#ffffff;border:none;box-shadow:4px 4px 8px black;margin-top:20px;" onClick="loginBtn();">
-            <img src="img/fb.png">
-        </div>
+<div id="header">
+	<div class="logo"><img src="img/logo.png" style="height:40px;width:50px;border:none;"></div>
+</div>
+
+<div class="content" id="loginBtn" style="display:none;">
+	<form name="formL" method="post" action="http://www.zinilombardia2013.it/apps/blend/loginINT.php">
+    	<fieldset class="fieldset">
+			<p class="avviso" id="selezionato">inserisci i tuoi dati di accesso:</p>
+    		<input type="text" value="" name="email" id="emailBox" class="field" onClick="javascript:cancella(this,0);" onFocus="javascript:cancella(this,0);" />
+    		<input type="password" value="" name="pwd" id="passwordBox" class="field" onClick="javascript:cancella(this,1);" onFocus="javascript:cancella(this,1);" / >
+            <div class="field" style="text-align:center;cursor:pointer;" onClick="loginBtn();">
+        		LOGIN
+    		</div>
+            <div class="field" style="text-align:center;border:none;">
+        		oppure
+    		</div>
+            <div class="field" style="text-align:center;cursor:pointer;" onClick="registratiBtn();">
+        		REGISTRATI
+    		</div>
+        </fieldset>
+    </form>
+    
+</div>
+<div class="content">   
+    <div id="clienteBtn" class="button" onClick="dettaglioCliente();" style="display:none;">
+    	<span id="fr-rotate" style="position:absolute;right:8px;display:block;width:22px;height:16px; background:url(img/fr.png) center center no-repeat;"></span>    
     </div>
 </div>
 
+<div class="content">
+	<div id="vipBtn" class="button btnQR" onClick="mostraVIPCard();" style="display:none;">
+		***
+    </div>
+</div>
+
+<div class="content">
+	<div id="schedaCliente" style="display:none;">
+		<p class="testoCliente">***</p>
+        <div id ="logoutBtn" class="button" onClick="nullIt();" style="position:absolute;left: 16px;width: 100px;top: 200px;">
+    		LOGOUT
+    	</div>
+    </div>
+</div>
+
+
+
+<div class="content">
+	<div id ="scannerBtn" class="button" onClick="raggiungi('scanner.html');" style="display:none;">
+    	GESTIONE
+    </div>
+</div>
+
+<div class="content">
+	<div id ="attesa" class="button" style="border:none;display:none;">
+    	ATTENDERE...
+    </div>
+</div>
+
+
+
+<div class="" style="margin-top: 180px;display:none;" id="degree_holder">Dummy Div serve per la rotazione della freccia!</div>
+
+<script type="text/javascript" src="js/jquery-css-transform.js"></script>
+<script>
+    var start = 0;
+    function rotazione(){
+		if(start == 0){end = 180}else{end = 0}
+		$('#degree_holder').css('margin-top',start);
+		$('#degree_holder').animate({
+			'marginTop' : end
+		},{
+			duration:750,
+			step: function(now, fx) {
+				$('#fr-rotate').css('transform','rotate(' + now + 'deg)');
+			},
+			complete:function(){start = end;}
+		});
+    }
+</script>
+
+
+<div id="footer">
+	<p style="text-align:center;color:#fff;font-family: 'Ropa Sans', sans-serif;">info</p>
+</div>
 <script type="text/javascript" src="cordova.js"></script>
 </body>
 </html>
