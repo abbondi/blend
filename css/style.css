@@ -1,0 +1,78 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+	margin:0;
+	padding:0;
+	background:#ededed;
+}
+
+#header {
+	position:relative;
+	top:0;
+	left:0;
+	margin:0;
+	padding:0;
+	width:100%;
+	height:100px;
+	border-bottom:3px solid #fff;
+	background:#3399cc;	
+}
+
+.logo {
+	width:100px;
+	height:80px;
+	position:relative;
+	padding:10px 10px;
+	margin:auto;
+}
+
+.content {
+	position:relative;
+	top:0;
+	left:0;
+	width:100%;
+	height:80px;	
+}
+
+.button {
+	position:relative;
+	top:0;
+	left:0;
+	width:96%;
+	height:76px;
+	border:1px solid#999;
+	margin:10px auto;
+	text-align:center;	
+	font-family: 'Ropa Sans', sans-serif;
+	font-size:24px;	
+	color:#3399cc;
+	cursor:pointer;
+}
+
+.button:hover {
+	background:#3399cc;
+	color:#fff;
+}
+
+#footer {
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;	
+	height:50px;
+	background:#3399cc;	
+}
+
+/*  VIPCARD */
+
+.bollo {
+	position:relative; 
+	float: left; 
+	margin: 5px;
+	width:120px;
+	height:120px;
+	border:1px solid #999; 
+	font-size:18px;
+		
+}
