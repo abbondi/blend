@@ -3,217 +3,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>BLEND</title>
-<link href='http://fonts.googleapis.com/css?family=Ropa+Sans:400,400italic' rel='stylesheet' type='text/css'>
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-#sfondo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/esagoni.png);
-	background-size:100% auto;
-	overflow:hidden;
-}
-
-#logo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/logo-r.png) no-repeat;
-	background-size:100% auto;
-}
-
-.content {
-	position:relative;
-	top:0;
-	left:0;
-	width:100%;
-	height:auto;
-	border:none;	
-}
-
-.button {
-	position:relative;
-	top:0;
-	left:0;
-	width:96%;
-	height:16px;
-	border:1px solid#999;
-	margin:5px auto;
-	padding: 8px 0;
-	text-align:center;	
-	font-family: 'Ropa Sans', sans-serif;
-	font-size:16px;	
-	line-height:16px;
-	color:#3399cc;
-	cursor:pointer;
+<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+<script>
 	
-border-radius:4px;
--webkit-border-radius:4px;		
+	/* VARIABILI */	
+	var  autoid 			= "0";
+	var  email  			= "";
+	var  name  				= "";
+	var  birthday  			= "";
+	var  tessera  			= "";
+	var  amministratore  	= "";
+	var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/"; //sessione.php?callback=?";
+	var	 appName 			= "blend";						
+	var  contatore			= 0;
+
+	$(document).ready(function () {
+		//controllo se esistono i dati in locale, altrimenti li prelevo dalla sessione remota (se non ci sono nemmeno lì re-indirizzo verso la pagina di login);
+		window.location.href = appPath + 'index.html';
+	});
 	
-}
-
-.field {
-	display: block;
-	width:96%;
-	height:16px;
-	border:1px solid#999;
-	margin:0 auto 8px auto;
-	padding: 8px 8px;
-	text-align: center;
-	font-family: 'Ropa Sans', sans-serif;
-	font-size:16px;	
-	line-height:16px;
-	color:#3399cc;
-	border-radius:4px;
-	-webkit-border-radius:4px;	
-}
-
-</style>
-	<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-	<script>
-			
-			/* VARIABILI */	
-			var  autoid 			= "0";
-			var  email  			= "";
-			var  name  				= "";
-			var  birthday  			= "";
-			var  tessera  			= "";
-			var  amministratore  	= "";
-			var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/"; //sessione.php?callback=?";
-			var	 appName 			= "blend";						
-				
-			/* FUNZIONI JS */
-			// oggetto per memorizzare localmente i dati di sessione;
-			function sessioneObj(var1, var2, var3, var4, var5, var6) {
-				
-				this.autoid 		= var1;
-				this.email 			= var2;
-				this.name 			= var3;
-				this.birthday 		= var4;
-				this.tessera 		= var5;
-				this.amministratore = var6;
-	            this.toString = toString;
-            }
-			
-			
-            function toString() {
-                return "autoid=" + this.autoid +
-                       " email=" + this.email + 
-					   " name=" + this.name +
-					   " birthday=" + this.birthday + 
-                       " tessera=" + this.tessera + 
-                       " amministratore=" + this.amministratore;
-            }
-            
-            function setIt(s1, s2, s3, s4, s5, s6) {
-                var profiloObj = new sessioneObj(s1, s2, s3, s4, s5, s6);
-                localStorage.setItem("profilo_key", JSON.stringify(profiloObj));
-            }
-			
-			function controllaLogin() {
-				
-				$.getJSON(appPath + 'sessione.php?callback=?','app=' + appName,function(res){
-					
-					autoid 			= res.autoid;
-					email  			= res.email;
-					name  				= res.name;
-					birthday  			= res.birthday;
-					tessera  			= res.tessera;
-					amministratore  	= res.amministratore;
-					
-					if (autoid=="0") {
-						// non ho una sessione valida, devo eseguire il login remoto;
-						$('#loginBtn').css('display','block');
-											
-					} else  {
-						// sono autenticato in remoto, posso memorizzare il locale i miei dati;
-						setIt(autoid, email, name, birthday, tessera, amministratore);
-						$('#loginBtn').css('display','none');
-						// devo vare il redirect verso l'applicazione locale oppre se sono amministratore verso il lettore di barcode						
-						// test se sono amministratore carica la pagina con lo scanner							
-						if (amministratore=="1") {
-							//$('#scannerBtn').css('display','block');
-							window.location.href = 'scannerbtn.html';
-						} else {
-							//$('#scannerBtn').css('display','none');
-							window.location.href = appPath + 'benvenutoINT.php';
-						}
-	
-						
-					}
-				 
-				});
-				
-			}
-			
-            function getIt() {
-                var stringifiedObject = localStorage.getItem("profilo_key");
-                var reconstitutedObject = JSON.parse(stringifiedObject);
-                if (reconstitutedObject) {
-					
-					//alert(reconstitutedObject.email);
-					autoid 			= reconstitutedObject.autoid;
-					email  			= reconstitutedObject.email;
-					name  				= reconstitutedObject.name;
-					birthday  			= reconstitutedObject.birthday;
-					tessera  			= reconstitutedObject.tessera;
-					amministratore  	= reconstitutedObject.amministratore;
-					
-                    reconstitutedObject.toString = toString;
-
-					$('#loginBtn').css('display','none');
-					// devo vare il redirect verso l'applicazione locale oppure se sono amministratore verso il lettore di barcode	
-					// test se sono amministratore carica la pagina con lo scanner		
-					if (amministratore=="1") {
-						//$('#scannerBtn').css('display','block');
-						window.location.href = 'scannerbtn.html';
-					} else {
-						//$('#scannerBtn').css('display','none');
-						//window.location.href = appPath + 'benvenutoINT.php';
-						window.location.href = appPath + 'sessionenuova.php?autoid=' + autoid;
-					}
-					
-                }
-                else {
-					$('#loginBtn').css('display','none');
-						controllaLogin();
-                }
-            }
-				
-			function loginBtn() {
-				window.location.href = 'login.html';
-			}
-		
-			function registratiBtn() {
-				window.location.href = appPath + 'registrati.php';
-			}
-				
-			$(document).ready(function () {
-				//controllo se esistono i dati in locale, altrimenti li prelevo dalla sessione remota (se non ci sono nemmeno lì re-indirizzo verso la pagina di login);
-				getIt();
-			});
-			
-    	</script>
+</script>
 </head>
 <body>
-<div id="sfondo"></div>
-<div id="logo"></div>
-<div style="position:absolute;width:100%;bottom:60px;overflow:hidden;">
-    <div class="content" id="loginBtn" style="display:none;width:70%;margin:auto;">
-         <div class="field" style="text-align:center;cursor:pointer;background:#34a423;color:#ffffff;border:none;box-shadow:4px 4px 8px black;" onClick="registratiBtn();">
-            REGISTRAZIONE
-        </div>   
-        <div class="field" style="text-align:center;cursor:pointer;background:#3e589c;color:#ffffff;border:none;box-shadow:4px 4px 8px black;margin-top:20px;" onClick="loginBtn();">
-            <img src="img/fb.png">
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript" src="cordova.js"></script>
 </body>
 </html>
