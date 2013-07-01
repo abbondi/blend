@@ -29,11 +29,17 @@
 	function test2() {
 		window.location.href = 'file.html';	
 	}
+	
+	function test3() {
+		window.location.href = appPath + 'file.html';	
+	}
 </script>
 </head>
 <body>
 <div onClick="javascript:test1();">TEST1</div>
 <div>&nbsp;</div>
-<div onClick="javascript:test2();">TEST2</div>
+<div onClick="javascript:test2();">TEST2 file da locale</div>
+<div>&nbsp;</div>
+<div onClick="javascript:test3();">TEST3 file da remoto</div>
 </body>
 </html>
