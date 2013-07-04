@@ -18,11 +18,10 @@
 	var  contatore			= 0;
 	var  uuid				= "0";
 
-	document.addEventListener("deviceready", onDeviceReady, false);
-
+	//document.addEventListener("deviceready", onDeviceReady, false);
+	
 	function onDeviceReady() {
 				uuid = device.uuid;
-				controllaLogin(uuid);
 				window.location.href = appPath + 'index.php?uuid=' + uuid;
 	}
 	
@@ -30,7 +29,8 @@
 	
 	/*
 	$(document).ready(function () {
-		window.location.href = appPath + 'index.html';
+		//uuid = device.uuid;		
+		window.location.href = appPath + 'index.php?uuid=' + uuid;
 	});
 	*/
 	
