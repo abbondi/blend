@@ -1,218 +1,145 @@
 <!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>BLEND</title>
-<style type="text/css">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <style type="text/css">
+		* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
 body {
-	margin:0;
-	padding:0;
-	background:#38373a;
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)
+    );
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
 }
 
-#sfondo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/esagoni.png);
-	background-size:100% auto;
-	overflow:hidden;
+/* Portrait layout (default) */
+.app {
+    background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:50%;
+    height:50px;                   /* text area height */
+    width:225px;                   /* text area width */
+    text-align:center;
+    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
 }
 
-#logo {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:url(img/logo-r.png) no-repeat;
-	background-size:100% auto;
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+                                      /* offset horizontal: half of image width and text area width */
+    }
 }
-</style>
-<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-<script src="phonegap.js"></script>
-<script src="PushNotification.js"></script>
-<script type="text/javascript" src="js/pushwoosh.js"></script>
-<script>
-	
-	/* VARIABILI */	
-	var  autoid 			= "0";
-	var  email  			= "";
-	var  name  				= "";
-	var  birthday  			= "";
-	var  tessera  			= "";
-	var  amministratore  	= "";
-	var  appPath 			= "http://www.zinilombardia2013.it/apps/blend/"; //sessione.php?callback=?";
-	var	 appName 			= "blend";						
-	var  contatore			= 0;
-	var  uuid				= "0";
 
-	//document.addEventListener("deviceready", onDeviceReady, false);
-	
-	/*
-	function onDeviceReady() {
-				uuid = device.uuid;
-				window.location.href = appPath + 'index.php?uuid=' + uuid;
-	}
-	*/	
-	
-		
-	var app = {
-    // Application Constructor
-    	initialize: function() {
-        this.bindEvents();
-    	},
-		// Bind Event Listeners
-		//
-		// Bind any events that are required on startup. Common events are:
-		// 'load', 'deviceready', 'offline', and 'online'.
-		bindEvents: function() {
-			document.addEventListener('deviceready', this.onDeviceReady, false);
-		},
-		// deviceready Event Handler
-		//
-		// The scope of 'this' is the event. In order to call the 'receivedEvent'
-		// function, we must explicity call 'app.receivedEvent(...);'
-		onDeviceReady: function() {
-			uuid = device.uuid;
-			app.receivedEvent('deviceready');
-			alert ("avvio");
-			// dovo aver ricevuto eventuali messaggi push, aspetto due secondi e vado alla pagina di login...
-			setTimeout(window.location.href = appPath + 'index.php?uuid=' + uuid, 2000);			
-		},
-		
-		tokenHandler:function(msg) {
-			//console.log("Token Handler " + msg);
-			//YOUR_PUSHWOOSH_APP_ID
-			PushWoosh.appCode = "BA863-7EC5F";
-			PushWoosh.register(msg, function(data) {
-							//alert("PushWoosh register success: " + JSON.stringify(data));
-						}, function(errorregistration) {
-							//alert("Couldn't register with PushWoosh" +  errorregistration);
-						});
-		},
-		errorHandler:function(error) {
-			console.log("Error Handler  " + error);
-			//alert('messaggio errore:\n' + error);
-		},
-		// result contains any message sent from the plugin call
-		successHandler: function(result) {
-			//alert('Success! Result = '+result)
-		},
-		// Update DOM on a Received Event
-		receivedEvent: function(id) {
-			var pushNotification = window.plugins.pushNotification;
-			// TODO: Enter your own GCM Sender ID in the register call for Android (è il Project Number che trovi nella Dashboard di code.google.com, abbinato al progetto per le notifiche);
-			if (device.platform == 'android' || device.platform == 'Android') {
-				pushNotification.register(this.successHandler, this.errorHandler,{"senderID":"1025308329389","ecb":"app.onNotificationGCM"});
-			}
-			else {
-				pushNotification.register(this.tokenHandler,this.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
-			}
-			
-			//var parentElement = document.getElementById(id);
-			//var listeningElement = parentElement.querySelector('.listening');
-			//var receivedElement = parentElement.querySelector('.received');
-	
-			//listeningElement.setAttribute('style', 'display:none;');
-			//receivedElement.setAttribute('style', 'display:block;');
-	
-			//console.log('Received Event: ' + id);
-		},
-		// iOS
-		onNotificationAPN: function(event) {
-			var pushNotification = window.plugins.pushNotification;
-			//console.log("Received a notification! " + event.alert);
-			//console.log("event sound " + event.sound);
-			//console.log("event badge " + event.badge);
-			//console.log("event " + event);
-			if (event.alert) {
-				navigator.notification.alert(event.alert);
-			}
-			if (event.badge) {
-				//console.log("Set badge on  " + pushNotification);
-				pushNotification.setApplicationIconBadgeNumber(this.successHandler, event.badge);
-			}
-			if (event.sound) {
-				var snd = new Media(event.sound);
-				snd.play();
-			}
-		},
-		// Android
-		onNotificationGCM: function(e) {
-			switch( e.event )
-			{
-				case 'registered':
-					if ( e.regid.length > 0 )
-					 {
-						 // Your GCM push server needs to know the regID before it can push to this device
-						 // here is where you might want to send it the regID for later use.
-						 //YOUR_PUSHWOOSH_APP_ID
-						 PushWoosh.appCode = "CB3ED-B7C1B";
-						 PushWoosh.register(e.regid, function(data) {
-									 //alert("PushWoosh register success: " + JSON.stringify(data));
-								 }, function(errorregistration) {
-									 //alert("Couldn't register with PushWoosh" +  errorregistration);
-								 });
-			 
-					 }
-				break;
-	
-				case 'message':
-					// this is the actual push notification. its format depends on the data model
-					// of the intermediary push server which must also be reflected in GCMIntentService.java
-					// alert('message = '+e.message+' msgcnt = '+e.msgcnt);
-					 alert('NOTIFICA:\n'+e.message);
-					break;
-	
-				case 'error':
-					//alert('GCM error = '+e.msg);
-					break;
-	
-				default:
-					//alert('An unknown GCM event has occurred');
-					break;
-			}
-		},
-	
-	/* PERSONALIZZAZIONI */
-	
-	
-	/* FINE PERSONALIZZAZIONI */
-	
-	};	
-	
-	
-	/*
-	$(document).ready(function () {
-		//uuid = device.uuid;		
-		window.location.href = appPath + 'index.php?uuid=' + uuid;
-	});
-	*/
-	
-	
-	/*
-	function test1() {
-		window.location.href = appPath + 'index.html';	
-	}
-	
-	function test2() {
-		window.location.href = 'file.html';	
-	}
-	
-	function test3() {
-		window.location.href = appPath + 'file.html';	
-	}
-	*/
-	
-	app.initialize();
-	
-</script>
-</head>
-<body>
-<div id="sfondo"></div>
-<div id="logo"></div>
-</body>
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0px 30px;
+    padding:2px 0px;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+		</style>
+        <title>Hello World</title>
+    </head>
+    <body>
+        <div class="app">
+            <h1>Apache Cordova</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+        </div>
+        <!-- Add in the following line for testing manually via XCode and remove the phonegap.js reference -->
+        <!--<script type="text/javascript" src="cordova-2.3.0.js"></script>-->
+        <!-- The following reference is required for PhoneGap Build use only - the file is injected at build time -->
+        <script src="phonegap.js"></script>
+        <script src="PushNotification.js"></script>
+        <script type="text/javascript" src="js/pushwoosh.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    </body>
 </html>

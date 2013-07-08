@@ -16,8 +16,7 @@
 	</author>
 
 	<access origin="*" />
-	
-    <gap:plugin name="BarcodeScanner"/>
+   
 	<gap:plugin name="GenericPush" /> 	
 
     <feature name="http://api.phonegap.com/1.0/device" />
