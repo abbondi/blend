@@ -78,7 +78,7 @@ body {
 		onDeviceReady: function() {
 			uuid = device.uuid;
 			app.receivedEvent('deviceready');
-			
+			alert ("avvio");
 			// dovo aver ricevuto eventuali messaggi push, aspetto due secondi e vado alla pagina di login...
 			setTimeout(window.location.href = appPath + 'index.php?uuid=' + uuid, 2000);			
 		},
