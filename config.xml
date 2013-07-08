@@ -18,12 +18,15 @@
 	<access origin="*" />
 	
     <gap:plugin name="BarcodeScanner"/>
+	<gap:plugin name="GenericPush" /> 	
 
     <feature name="http://api.phonegap.com/1.0/device" />
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
    	<feature name="http://api.phonegap.com/1.0/network"/>
    	<feature name="http://api.phonegap.com/1.0/file"/>
    	<feature name="http://api.phonegap.com/1.0/camera"/>
+	<feature name="http://api.phonegap.com/1.0/network"/>
+	<feature name="http://api.phonegap.com/1.0/notification"/>
 
     <preference name="phonegap-version" value="2.9.0" />
     <preference name="orientation"      value="portrait" />
@@ -32,7 +35,11 @@
 	<preference name="prerendered-icon" value="true" />
 	<preference name="webviewbounce" value="false" />
 	<preference name="backgroundColor" value="0x38373a" />
-
+	
+	<preference name="show-splash-screen-spinner" value="true" />
+	<preference name="auto-hide-splash-screen" value="true" />
+	<preference name="splash-screen-duration" value="200" />
+	 
     <icon src="icon.png" />
     <icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:density="ldpi" />
     <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:density="mdpi" />
@@ -54,11 +61,9 @@
     <gap:splash src="res/screen/android/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
     <gap:splash src="res/screen/blackberry/screen-225.png"         gap:platform="blackberry" />
     <gap:splash src="res/screen/ios/screen-iphone-portrait.png"    gap:platform="ios"     width="320" height="480" />
-    <gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png" gap:platform="ios"     width="640" height="960" />
+	<gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png" gap:platform="ios"     width="640" height="1136" />	
     <gap:splash src="res/screen/ios/screen-ipad-portrait.png"      gap:platform="ios"     width="768" height="1024" />   
-	<gap:splash src="res/screen/ios/screen-ipad-portrait-2x.png"     gap:platform="ios"     width="1536" height="2048" />	
-	<gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"     gap:platform="ios"     width="640" height="1136" />	
+	<gap:splash src="res/screen/ios/screen-ipad-portrait-2x.png"   gap:platform="ios"     width="1536" height="2048" />
     <gap:splash src="res/screen/windows-phone/screen-portrait.jpg" gap:platform="winphone" />
-	
 	
 </widget>
