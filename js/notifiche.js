@@ -34,6 +34,12 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 		uuid = device.uuid;
+		
+		if (device.platform == 'android' || device.platform == 'Android') {
+			sistema = 'android';
+		} else {
+			sistema = 'ios';	
+		}
 		//alert('uuid:' + uuid);
         app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:

@@ -63,6 +63,7 @@ body {
 	var	 appName 			= "blend";						
 	var  contatore			= 0;
 	var  uuid				= "0";
+	var	 sistema			= "";
 
 	//document.addEventListener("deviceready", onDeviceReady, false);
 	
@@ -74,7 +75,7 @@ body {
 	*/	
 	
 	function raggiungi() {
-		window.location.href = appPath + 'index.php?uuid=' + uuid;	
+		window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;	
 	}
 	
 	app.initialize();
