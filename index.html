@@ -64,6 +64,7 @@ body {
 	var  contatore			= 0;
 	var  uuid				= "0";
 	var	 sistema			= "ios";
+	var  piattaforma		= "";
 
 	//document.addEventListener("deviceready", onDeviceReady, false);
 	
@@ -75,6 +76,7 @@ body {
 	*/	
 	
 	function raggiungi() {
+		alert('Test2\nuuid:' + uuid + '\npiattaforma\n: ' + piattaforma + '\nsistema: ' + sistema);
 		window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;	
 	}
 	
@@ -85,6 +87,6 @@ body {
 <body>
 <div id="sfondo"></div>
 <div id="logo"></div>
-<div id="test" onClick="javascript:raggiungi();">TEST</div>
+<div id="test" onClick="javascript:raggiungi();">CONTINUA</div>
 </body>
 </html>
