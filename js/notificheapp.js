@@ -34,13 +34,15 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 		uuid = device.uuid;
+		alert('Test1\nuuid:' + uuid);
 		piattaforma = device.platform;
+		alert('Test2\npiattaforma: ' + piattaforma);
 		if (device.platform == 'android' || device.platform == 'Android') {
 			sistema = 'android';
 		} else {
 			sistema = 'ios';	
 		}
-		alert('Test1\nuuid:' + uuid + '\npiattaforma\n: ' + piattaforma + '\nsistema: ' + sistema);
+		alert('Test3\nsistema: ' + sistema);
         app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:
 		//window.location.href = appPath + 'index.php?uuid=' + uuid;
