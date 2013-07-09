@@ -34,15 +34,15 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 		uuid = device.uuid;
-		alert('Test1\nuuid:' + uuid);
+		//alert('Test1\nuuid:' + uuid);
 		piattaforma = device.platform;
-		alert('Test2\npiattaforma: ' + piattaforma);
+		//alert('Test2\npiattaforma: ' + piattaforma);
 		if (device.platform == 'android' || device.platform == 'Android') {
 			sistema = 'android';
 		} else {
 			sistema = 'ios';	
 		}
-		alert('Test3\nsistema: ' + sistema);
+		//alert('Test3\nsistema: ' + sistema);
         app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:
 		//window.location.href = appPath + 'index.php?uuid=' + uuid;
@@ -53,18 +53,18 @@ var app = {
 		//YOUR_PUSHWOOSH_APP_ID
 		PushWoosh.appCode = "CB3ED-B7C1B";
     	PushWoosh.register(msg, function(data) {
-                        //alert("PushWoosh register success: " + JSON.stringify(data));
+                        alert("3) Dispositivo registrato con successo: " + JSON.stringify(data));
                     }, function(errorregistration) {
-                        //alert("Couldn't register with PushWoosh" +  errorregistration);
+                        alert("4) Errore durante la registrazione: " +  errorregistration);
                     });
     },
     errorHandler:function(error) {
         //console.log("Error Handler  " + error);
-        //alert('messaggio errore:\n' + error);
+        alert('messaggio errore:\n' + error);
     },
     // result contains any message sent from the plugin call
     successHandler: function(result) {
-        //alert('Success! Result = '+result)
+        alert('Success! Result = '+result)
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -117,9 +117,9 @@ var app = {
 					 //YOUR_PUSHWOOSH_APP_ID
 					 PushWoosh.appCode = "CB3ED-B7C1B";
 					 PushWoosh.register(e.regid, function(data) {
-								 //alert("PushWoosh register success: " + JSON.stringify(data));
+								 alert("1) Dispositivo registrato con successo: " + JSON.stringify(data));
 							 }, function(errorregistration) {
-								 //alert("Couldn't register with PushWoosh" +  errorregistration);
+								 alert("2) Errore durante la registrazione: " +  errorregistration);
 							 });
 		 
 				 }
@@ -133,11 +133,11 @@ var app = {
             	break;
 
             case 'error':
-              	//alert('GCM error = '+e.msg);
+              	alert('GCM error = '+e.msg);
             	break;
 
             default:
-            	//alert('An unknown GCM event has occurred');
+            	alert('An unknown GCM event has occurred');
             	break;
         }
     },
