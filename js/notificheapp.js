@@ -61,7 +61,7 @@ var app = {
         //console.log("Token Handler " + msg);
 		//YOUR_PUSHWOOSH_APP_ID
 		app.avviso('007i: ' + msg);
-		PushWoosh.appCode = "CB3ED-B7C1B";
+		PushWoosh.appCode = "7D2C3-7FAA6";
     	PushWoosh.register(msg, function(data) {
 						app.avviso('012i: Dispositivo registrato con successo: ' + JSON.stringify(data));
                         //alert("3) Dispositivo registrato con successo: " + JSON.stringify(data));
@@ -135,7 +135,7 @@ var app = {
 					 // Your GCM push server needs to know the regID before it can push to this device
 					 // here is where you might want to send it the regID for later use.
 					 //YOUR_PUSHWOOSH_APP_ID
-					 PushWoosh.appCode = "CB3ED-B7C1B";
+					 PushWoosh.appCode = "7D2C3-7FAA6";
 					 PushWoosh.register(e.regid, function(data) {
 						 		app.avviso('009a: Dispositivo registrato con successo: ' + JSON.stringify(data));
 								//alert("1) Dispositivo registrato con successo: " + JSON.stringify(data));
