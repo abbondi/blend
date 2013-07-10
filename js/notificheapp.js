@@ -63,9 +63,11 @@ var app = {
 		app.avviso('007i: ' + msg);
 		PushWoosh.appCode = "CB3ED-B7C1B";
     	PushWoosh.register(msg, function(data) {
-                        alert("3) Dispositivo registrato con successo: " + JSON.stringify(data));
+						app.avviso('012i: Dispositivo registrato con successo: ' + JSON.stringify(data));
+                        //alert("3) Dispositivo registrato con successo: " + JSON.stringify(data));
                     }, function(errorregistration) {
-                        alert("4) Errore durante la registrazione: " +  errorregistration);
+						app.avviso('013i: Errore durante la registrazione: ' + errorregistration);
+                        //alert("4) Errore durante la registrazione: " +  errorregistration);
                     });
     },
     errorHandler:function(error) {
@@ -102,19 +104,23 @@ var app = {
     },
     // iOS
     onNotificationAPN: function(event) {
+		app.avviso('009i: onNotificationAPN');
         var pushNotification = window.plugins.pushNotification;
         //console.log("Received a notification! " + event.alert);
         //console.log("event sound " + event.sound);
         //console.log("event badge " + event.badge);
         //console.log("event " + event);
         if (event.alert) {
+			app.avviso('010i: event.alert');
             navigator.notification.alert(event.alert);
         }
         if (event.badge) {
             //console.log("Set badge on  " + pushNotification);
+			app.avviso('011i: event.badge');
             pushNotification.setApplicationIconBadgeNumber(this.successHandler, event.badge);
         }
         if (event.sound) {
+			app.avviso('012i: event.sound');
             var snd = new Media(event.sound);
             snd.play();
         }
@@ -131,9 +137,11 @@ var app = {
 					 //YOUR_PUSHWOOSH_APP_ID
 					 PushWoosh.appCode = "CB3ED-B7C1B";
 					 PushWoosh.register(e.regid, function(data) {
-								 alert("1) Dispositivo registrato con successo: " + JSON.stringify(data));
+						 		app.avviso('009a: Dispositivo registrato con successo: ' + JSON.stringify(data));
+								//alert("1) Dispositivo registrato con successo: " + JSON.stringify(data));
 							 }, function(errorregistration) {
-								 alert("2) Errore durante la registrazione: " +  errorregistration);
+								app.avviso('009a: Errore durante la registrazione: ' +errorregistration);
+								//alert("2) Errore durante la registrazione: " +  errorregistration);
 							 });
 		 
 				 }
