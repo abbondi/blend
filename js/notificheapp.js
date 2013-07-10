@@ -24,7 +24,7 @@ var app = {
 	},
     // Application Constructor	
     initialize: function() {
-		avviso('001');
+		app.avviso('001');
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -32,7 +32,7 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-		avviso('002');
+		app.avviso('002');
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -40,7 +40,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-		avviso('003');
+		app.avviso('003');
 		uuid = device.uuid;
 		//alert('Test1\nuuid:' + uuid);
 		piattaforma = device.platform;
@@ -51,7 +51,7 @@ var app = {
 			sistema = 'ios';	
 		}
 		
-		avviso('004: ' + sistema);
+		app.avviso('004: ' + sistema);
         app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:
 		//window.location.href = appPath + 'index.php?uuid=' + uuid;
@@ -60,7 +60,7 @@ var app = {
     tokenHandler:function(msg) {
         //console.log("Token Handler " + msg);
 		//YOUR_PUSHWOOSH_APP_ID
-		avviso('007i: ' + msg);
+		app.avviso('007i: ' + msg);
 		PushWoosh.appCode = "CB3ED-B7C1B";
     	PushWoosh.register(msg, function(data) {
                         alert("3) Dispositivo registrato con successo: " + JSON.stringify(data));
@@ -70,24 +70,24 @@ var app = {
     },
     errorHandler:function(error) {
         //console.log("Error Handler  " + error);
-		avviso('008: ERRORE ' + error);
+		app.avviso('008: ERRORE ' + error);
     },
     // result contains any message sent from the plugin call
     successHandler: function(result) {
-		avviso('007a: ' + result);
+		app.avviso('007a: ' + result);
         //alert('Success! Result = '+result)
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-		avviso('005: ' + id);
+		app.avviso('005: ' + id);
         var pushNotification = window.plugins.pushNotification;
         // TODO: Enter your own GCM Sender ID in the register call for Android (è il Project Number che trovi nella Dashboard di code.google.com, abbinato al progetto per le notifiche);
         if (device.platform == 'android' || device.platform == 'Android') {
-			avviso('006a: ' + device.platform);
+			app.avviso('006a: ' + device.platform);
             pushNotification.register(this.successHandler, this.errorHandler,{"senderID":"1025308329389","ecb":"app.onNotificationGCM"});
         }
         else {
-			avviso('006i: ' + device.platform);
+			app.avviso('006i: ' + device.platform);
             pushNotification.register(this.tokenHandler,this.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
         }
 		
