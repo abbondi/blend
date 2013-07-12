@@ -55,7 +55,7 @@ var app = {
         app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:
 		//window.location.href = appPath + 'index.php?uuid=' + uuid;
-		
+		window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;
     },
     tokenHandler:function(msg) {
         //console.log("Token Handler " + msg);
