@@ -52,8 +52,8 @@ var app = {
 			sistema = 'ios';	
 		}
 		
-		app.avviso('004: ' + sistema);
-        app.receivedEvent('deviceready');
+		//! IMPORTANTE: ho disabilitato al momento le registrazioni delle notifiche!
+        //app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:
 		//window.location.href = appPath + 'index.php?uuid=' + uuid;
 		window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;
@@ -94,14 +94,7 @@ var app = {
             pushNotification.register(this.tokenHandler,this.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
         }
 		
-       // var parentElement = document.getElementById(id);
-       // var listeningElement = parentElement.querySelector('.listening');
-       // var receivedElement = parentElement.querySelector('.received');
 
-       // listeningElement.setAttribute('style', 'display:none;');
-       // receivedElement.setAttribute('style', 'display:block;');
-
-       // console.log('Received Event: ' + id);
     },
     // iOS
     onNotificationAPN: function(event) {
