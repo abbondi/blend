@@ -5,10 +5,10 @@
 	version = "1.0.0"
 	versionCode = "1">
 	
-    <name>BLEND</name>
+    <name>BLEND CREW</name>
 
     <description>
-        BLEND Applicazione VIP Card
+        Applicazione per informare gli utenti di tutte le novità ed iniziative del locale Blend
     </description>
 
     <author href="http://www.massimoabbondi.it" email="magenta@massimoabbondi.it">
@@ -16,8 +16,10 @@
 	</author>
 
 	<access origin="*" />
-   
-	<gap:plugin name="GenericPush" /> 	
+	
+   	<gap:platform name="ios" />
+	<gap:platform name="android" />
+	<gap:plugin name="com.pushwoosh.plugins.pushwoosh" version="3.0.1"/> 	
 
     <feature name="http://api.phonegap.com/1.0/device" />
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
