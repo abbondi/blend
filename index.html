@@ -34,15 +34,16 @@ body {
 #test {
 	position: absolute;
 	bottom:0;
-	height:30px;
+	height:60px;
 	width:100%;
 	text-align:center;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:15px;
-	line-height:30px;
+	line-height:60px;
 	background:#f00;
 	color:#fff;	
-	display:none;
+	cursor:pointer;
+	display:block;
 }
 
 #logs {
@@ -90,9 +91,11 @@ body {
 	}
 	*/	
 	
-	function raggiungi() {
+	function riprova() {
 		//alert('Test4\nuuid:' + uuid + '\npiattaforma: ' + piattaforma + '\nsistema: ' + sistema);
-		window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;	
+		//window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;	
+		$('#test').css('display','none');
+		testConn();
 	}
 	
 	function doConnectFunction() {
@@ -101,6 +104,7 @@ body {
 	}
 	function doNotConnectFunction() {	
 		alert('ATTENZIONE: non sei connesso');
+		$('#test').css('display','block');
 	}
 
 	function testConn() {
@@ -119,6 +123,6 @@ body {
 <div id="sfondo"></div>
 <div id="logo"></div>
 <div id="logs"></div>
-<div id="test" onClick="javascript:raggiungi();">RIPROVA</div>
+<div id="test" onClick="javascript:riprova();">RIPROVA</div>
 </body>
 </html>
