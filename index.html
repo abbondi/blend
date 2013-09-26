@@ -56,7 +56,7 @@ body {
 	font-size:15px;
 	background:rgba(0,0,0,0.5);
 	color:#fff;	
-	display:block;	
+	display:none;	
 }
 
 </style>
@@ -95,8 +95,21 @@ body {
 		window.location.href = appPath + sistema + '/index.php?uuid=' + uuid;	
 	}
 	
-	app.initialize();
+	function doConnectFunction() {
+		//alert('sei connesso');
+		app.initialize();
+	}
+	function doNotConnectFunction() {	
+		alert('ATTENZIONE: non sei connesso');
+	}
+
+	var i = new Image();
+	i.onload = doConnectFunction;
+	i.onerror = doNotConnectFunction;
+	// IMMAGINE DI TEST
+	i.src = 'http://www.massimoabbondi.it/apps/test.gif?d=' + escape(Date());
 	
+	//app.initialize();
 </script>
 </head>
 <body>
