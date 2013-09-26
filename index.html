@@ -103,12 +103,15 @@ body {
 		alert('ATTENZIONE: non sei connesso');
 	}
 
-	var i = new Image();
-	i.onload = doConnectFunction;
-	i.onerror = doNotConnectFunction;
-	// IMMAGINE DI TEST
-	i.src = 'http://www.massimoabbondi.it/apps/test.gif?d=' + escape(Date());
+	function testConn() {
+		var i = new Image();
+		i.onload = doConnectFunction;
+		i.onerror = doNotConnectFunction;
+		// IMMAGINE DI TEST
+		i.src = 'http://www.massimoabbondi.it/apps/test.gif?d=' + escape(Date());
+	}
 	
+	testConn();
 	//app.initialize();
 </script>
 </head>
@@ -116,6 +119,6 @@ body {
 <div id="sfondo"></div>
 <div id="logo"></div>
 <div id="logs"></div>
-<div id="test" onClick="javascript:raggiungi();">CONTINUA</div>
+<div id="test" onClick="javascript:raggiungi();">RIPROVA</div>
 </body>
 </html>
