@@ -228,8 +228,7 @@ var app = {
 			sistema = 'ios';	
 		}
 		
-		app.avviso('004: ' + sistema);
-        app.receivedEvent('deviceready');
+		app.receivedEvent('deviceready');
 		//PERSONALIZZA IL PERCORSO:
 		window.location.href = "http://www.massimoabbondi.it/apps/blend/" + sistema + '/index.php?uuid=' + uuid;
     },
