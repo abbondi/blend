@@ -219,9 +219,9 @@ var app = {
         app.receivedEvent('deviceready');
 		alert('Test2: ' + device.platform + '\n' + device.uuid);
 		uuid = device.uuid;
-		//alert('Test1\nuuid:' + uuid);
+		alert('Test3\nuuid:' + uuid);
 		piattaforma = device.platform;
-		//alert('Test2\npiattaforma: ' + piattaforma);
+		alert('Test4\npiattaforma: ' + piattaforma);
 		if (device.platform == 'android' || device.platform == 'Android') {			
 			sistema = 'android';
 		} else {
