@@ -2,8 +2,8 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
 	xmlns:gap = "http://phonegap.com/ns/1.0"
 	id = "it.massimoabbondi.blend"
-	version = "1.0.3"
-	versionCode = "13">
+	version = "1.0.4"
+	versionCode = "104">
 	
     <name>BLEND CREW</name>
 
@@ -15,6 +15,8 @@
         Massimo Abbondi
 	</author>
 
+	<access origin="http://127.0.0.1*"/> <!-- allow local pages -->
+    <access origin="https://cp.pushwoosh.com"/>
 	<access origin="*" />
 	
    	<gap:platform name="ios" />
