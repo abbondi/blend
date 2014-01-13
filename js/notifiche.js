@@ -214,14 +214,14 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-		alert('Test1: onDeviceReady');
+		//alert('Test1: onDeviceReady');
         initPushwoosh();
         app.receivedEvent('deviceready');
-		alert('Test2: ' + device.platform + '\n' + device.uuid);
+		//alert('Test2: ' + device.platform + '\n' + device.uuid);
 		uuid = device.uuid;
-		alert('Test3\nuuid:' + uuid);
+		//alert('Test3\nuuid:' + uuid);
 		piattaforma = device.platform;
-		alert('Test4\npiattaforma: ' + piattaforma);
+		//alert('Test4\npiattaforma: ' + piattaforma);
 		if (device.platform == 'android' || device.platform == 'Android') {			
 			sistema = 'android';
 		} else {
